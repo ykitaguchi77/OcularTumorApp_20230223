@@ -1,0 +1,437 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BF60F24F2766E66000DD6253 /* CorneaApp_newer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F24E2766E66000DD6253 /* CorneaApp_newer.swift */; };
+		BF60F2512766E66000DD6253 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2502766E66000DD6253 /* ContentView.swift */; };
+		BF60F2532766E66200DD6253 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF60F2522766E66200DD6253 /* Assets.xcassets */; };
+		BF60F2562766E66200DD6253 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF60F2552766E66200DD6253 /* Preview Assets.xcassets */; };
+		BF60F25B2766E66200DD6253 /* CorneaApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2592766E66200DD6253 /* CorneaApp.xcdatamodeld */; };
+		BF60F2652766E72A00DD6253 /* CameraPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2642766E72A00DD6253 /* CameraPage.swift */; };
+		BF60F2672766E74A00DD6253 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2662766E74A00DD6253 /* InformationView.swift */; };
+		BF60F2692766E75B00DD6253 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2682766E75B00DD6253 /* Persistence.swift */; };
+		BF60F26B2766E76B00DD6253 /* SavedDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F26A2766E76B00DD6253 /* SavedDataView.swift */; };
+		BF60F26D2766E77800DD6253 /* SendDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F26C2766E77800DD6253 /* SendDataView.swift */; };
+		BF60F26F2766E79D00DD6253 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F26E2766E79D00DD6253 /* ImagePicker.swift */; };
+		BF60F2712766EA3000DD6253 /* ConstHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2702766EA3000DD6253 /* ConstHolder.swift */; };
+		BF60F2732766EA4000DD6253 /* ResultHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2722766EA4000DD6253 /* ResultHolder.swift */; };
+		BF60F2752766EA5700DD6253 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2742766EA5700DD6253 /* UIImageExtension.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		BF60F24B2766E66000DD6253 /* CorneaApp_1.1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CorneaApp_1.1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF60F24E2766E66000DD6253 /* CorneaApp_newer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorneaApp_newer.swift; sourceTree = "<group>"; };
+		BF60F2502766E66000DD6253 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BF60F2522766E66200DD6253 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BF60F2552766E66200DD6253 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BF60F25A2766E66200DD6253 /* CorneaApp_newer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CorneaApp_newer.xcdatamodel; sourceTree = "<group>"; };
+		BF60F2642766E72A00DD6253 /* CameraPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPage.swift; sourceTree = "<group>"; };
+		BF60F2662766E74A00DD6253 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
+		BF60F2682766E75B00DD6253 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		BF60F26A2766E76B00DD6253 /* SavedDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDataView.swift; sourceTree = "<group>"; };
+		BF60F26C2766E77800DD6253 /* SendDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDataView.swift; sourceTree = "<group>"; };
+		BF60F26E2766E79D00DD6253 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		BF60F2702766EA3000DD6253 /* ConstHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstHolder.swift; sourceTree = "<group>"; };
+		BF60F2722766EA4000DD6253 /* ResultHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultHolder.swift; sourceTree = "<group>"; };
+		BF60F2742766EA5700DD6253 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		BF60F2762766F2CE00DD6253 /* CorneaApp_1.1-newer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CorneaApp_1.1-newer-Info.plist"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BF60F2482766E66000DD6253 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BF60F2422766E66000DD6253 = {
+			isa = PBXGroup;
+			children = (
+				BF60F24D2766E66000DD6253 /* CorneaApp_newer */,
+				BF60F24C2766E66000DD6253 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BF60F24C2766E66000DD6253 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BF60F24B2766E66000DD6253 /* CorneaApp_1.1.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BF60F24D2766E66000DD6253 /* CorneaApp_newer */ = {
+			isa = PBXGroup;
+			children = (
+				BF60F2762766F2CE00DD6253 /* CorneaApp_1.1-newer-Info.plist */,
+				BF60F2632766E71200DD6253 /* Pages */,
+				BF60F2622766E6FB00DD6253 /* Extension */,
+				BF60F2522766E66200DD6253 /* Assets.xcassets */,
+				BF60F2592766E66200DD6253 /* CorneaApp.xcdatamodeld */,
+				BF60F2542766E66200DD6253 /* Preview Content */,
+			);
+			path = CorneaApp_newer;
+			sourceTree = "<group>";
+		};
+		BF60F2542766E66200DD6253 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				BF60F2552766E66200DD6253 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BF60F2612766E6F200DD6253 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		BF60F2622766E6FB00DD6253 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BF60F2612766E6F200DD6253 /* Pages */,
+				BF60F2702766EA3000DD6253 /* ConstHolder.swift */,
+				BF60F2722766EA4000DD6253 /* ResultHolder.swift */,
+				BF60F2742766EA5700DD6253 /* UIImageExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		BF60F2632766E71200DD6253 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				BF60F2642766E72A00DD6253 /* CameraPage.swift */,
+				BF60F2502766E66000DD6253 /* ContentView.swift */,
+				BF60F2662766E74A00DD6253 /* InformationView.swift */,
+				BF60F2682766E75B00DD6253 /* Persistence.swift */,
+				BF60F26A2766E76B00DD6253 /* SavedDataView.swift */,
+				BF60F26C2766E77800DD6253 /* SendDataView.swift */,
+				BF60F26E2766E79D00DD6253 /* ImagePicker.swift */,
+				BF60F24E2766E66000DD6253 /* CorneaApp_newer.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BF60F24A2766E66000DD6253 /* CorneaApp_1.1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF60F25E2766E66200DD6253 /* Build configuration list for PBXNativeTarget "CorneaApp_1.1" */;
+			buildPhases = (
+				BF60F2472766E66000DD6253 /* Sources */,
+				BF60F2482766E66000DD6253 /* Frameworks */,
+				BF60F2492766E66000DD6253 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CorneaApp_1.1;
+			productName = CorneaApp_newer;
+			productReference = BF60F24B2766E66000DD6253 /* CorneaApp_1.1.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BF60F2432766E66000DD6253 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1310;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					BF60F24A2766E66000DD6253 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+				};
+			};
+			buildConfigurationList = BF60F2462766E66000DD6253 /* Build configuration list for PBXProject "CorneaApp_1.1" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BF60F2422766E66000DD6253;
+			productRefGroup = BF60F24C2766E66000DD6253 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BF60F24A2766E66000DD6253 /* CorneaApp_1.1 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BF60F2492766E66000DD6253 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF60F2562766E66200DD6253 /* Preview Assets.xcassets in Resources */,
+				BF60F2532766E66200DD6253 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BF60F2472766E66000DD6253 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF60F26D2766E77800DD6253 /* SendDataView.swift in Sources */,
+				BF60F25B2766E66200DD6253 /* CorneaApp.xcdatamodeld in Sources */,
+				BF60F2512766E66000DD6253 /* ContentView.swift in Sources */,
+				BF60F2692766E75B00DD6253 /* Persistence.swift in Sources */,
+				BF60F2672766E74A00DD6253 /* InformationView.swift in Sources */,
+				BF60F2732766EA4000DD6253 /* ResultHolder.swift in Sources */,
+				BF60F2652766E72A00DD6253 /* CameraPage.swift in Sources */,
+				BF60F2752766EA5700DD6253 /* UIImageExtension.swift in Sources */,
+				BF60F26F2766E79D00DD6253 /* ImagePicker.swift in Sources */,
+				BF60F26B2766E76B00DD6253 /* SavedDataView.swift in Sources */,
+				BF60F24F2766E66000DD6253 /* CorneaApp_newer.swift in Sources */,
+				BF60F2712766EA3000DD6253 /* ConstHolder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BF60F25C2766E66200DD6253 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BF60F25D2766E66200DD6253 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BF60F25F2766E66200DD6253 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CorneaApp_newer/Preview Content\"";
+				DEVELOPMENT_TEAM = FKLM5SV532;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CorneaApp_1.1-newer-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "yk-gankeisei.CorneaApp-newer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BF60F2602766E66200DD6253 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CorneaApp_newer/Preview Content\"";
+				DEVELOPMENT_TEAM = FKLM5SV532;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CorneaApp_1.1-newer-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "yk-gankeisei.CorneaApp-newer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BF60F2462766E66000DD6253 /* Build configuration list for PBXProject "CorneaApp_1.1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF60F25C2766E66200DD6253 /* Debug */,
+				BF60F25D2766E66200DD6253 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BF60F25E2766E66200DD6253 /* Build configuration list for PBXNativeTarget "CorneaApp_1.1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF60F25F2766E66200DD6253 /* Debug */,
+				BF60F2602766E66200DD6253 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BF60F2592766E66200DD6253 /* CorneaApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BF60F25A2766E66200DD6253 /* CorneaApp_newer.xcdatamodel */,
+			);
+			currentVersion = BF60F25A2766E66200DD6253 /* CorneaApp_newer.xcdatamodel */;
+			path = CorneaApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = BF60F2432766E66000DD6253 /* Project object */;
+}

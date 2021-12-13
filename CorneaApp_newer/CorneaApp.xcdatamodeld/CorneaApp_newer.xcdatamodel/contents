@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21C5031d" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="newdate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="newdateid" optional="YES" attributeType="String"/>
+        <attribute name="newdisease" optional="YES" attributeType="String"/>
+        <attribute name="newfreedisease" optional="YES" attributeType="String"/>
+        <attribute name="newhashid" optional="YES" attributeType="String"/>
+        <attribute name="newhospitals" optional="YES" attributeType="String"/>
+        <attribute name="newid" optional="YES" attributeType="String"/>
+        <attribute name="newimagenum" optional="YES" attributeType="String"/>
+        <attribute name="newside" optional="YES" attributeType="String"/>
+        <attribute name="newsurgeon" optional="YES" attributeType="String"/>
+        <attribute name="newsurgery" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="194"/>
+    </elements>
+</model>

@@ -53,7 +53,12 @@ struct ContentView: View {
                 .scaledToFit()
                 .frame(width: 200)
             
-            Button(action: { self.isPatientInfo = true /*またはself.show.toggle() */ }) {
+            Button(action: {
+                //病院番号はアプリを落としても保存されるようにしておく
+                self.user.selected_hospital = UserDefaults.standard.integer(forKey: "hospitaldefault")
+                self.isPatientInfo = true /*またはself.show.toggle() */
+                
+            }) {
                 HStack{
                     Image(systemName: "info.circle")
                     Text("患者情報入力")

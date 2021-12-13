@@ -13,7 +13,7 @@ struct SendData: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) var viewContext
     @State private var showingAlert: Bool = false
-    
+        
     var body: some View {
         
         VStack{
@@ -93,6 +93,7 @@ struct SendData: View {
         }
     }
             
+    
 
     
     //ResultHolderにテキストデータを格納
@@ -113,6 +114,7 @@ struct SendData: View {
         return string
     }
 
+    
     
     
     public func SetCoreData(context: NSManagedObjectContext){

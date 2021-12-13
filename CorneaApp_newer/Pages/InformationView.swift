@@ -13,10 +13,7 @@ struct Informations: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) private var viewContext
     @State var isSaved = false
-    @State private var goTakePhoto: Bool = false  //撮影ボタン
-    
-    @State var datas = ["item1", "item2", "item3"]
-    @State var itemSelection:String?
+    @State private var goTakePhoto: Bool = false  //撮影ボタン    
     
     var body: some View {
         NavigationView{
@@ -31,9 +28,9 @@ struct Informations: View {
                     HStack{
                         Text(" I D ")
                         TextField("idを入力してください", text: $user.id)
-                    }.onChange(of: user.id) { _ in
-                        self.user.isSendData = false
-                        }
+                        }.onChange(of: user.id) { _ in
+                            self.user.isSendData = false
+                            }
                         
                         Picker(selection: $user.selected_hospital,
                                    label: Text("施設")) {
@@ -41,9 +38,10 @@ struct Informations: View {
                                 Text(self.user.hospitals[$0])
                                      }
                             }
-                           .onChange(of: user.selected_hospital) { _ in
+                           .onChange(of: user.selected_hospital) {_ in
                                self.user.isSendData = false
-                               }
+                               UserDefaults.standard.set(user.selected_hospital, forKey:"hospitaldefault")
+                           }
                     
                         Picker(selection: $user.selected_side,
                                    label: Text("右or左")) {
@@ -51,7 +49,7 @@ struct Informations: View {
                                 Text(self.user.side[$0])
                                     }
                             }
-                            .onChange(of: user.selected_side) { _ in
+                            .onChange(of: user.selected_side) {_ in
                                 self.user.isSendData = false
                                 }
                         

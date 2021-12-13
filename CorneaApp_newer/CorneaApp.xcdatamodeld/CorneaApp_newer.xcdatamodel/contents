@@ -10,10 +10,8 @@
         <attribute name="newid" optional="YES" attributeType="String"/>
         <attribute name="newimagenum" optional="YES" attributeType="String"/>
         <attribute name="newside" optional="YES" attributeType="String"/>
-        <attribute name="newsurgeon" optional="YES" attributeType="String"/>
-        <attribute name="newsurgery" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="194"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

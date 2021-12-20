@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF60F24F2766E66000DD6253 /* CorneaApp_newer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F24E2766E66000DD6253 /* CorneaApp_newer.swift */; };
+		BF60F24F2766E66000DD6253 /* OcularTumorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F24E2766E66000DD6253 /* OcularTumorApp.swift */; };
 		BF60F2512766E66000DD6253 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2502766E66000DD6253 /* ContentView.swift */; };
 		BF60F2532766E66200DD6253 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF60F2522766E66200DD6253 /* Assets.xcassets */; };
 		BF60F2562766E66200DD6253 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF60F2552766E66200DD6253 /* Preview Assets.xcassets */; };
-		BF60F25B2766E66200DD6253 /* CorneaApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2592766E66200DD6253 /* CorneaApp.xcdatamodeld */; };
+		BF60F25B2766E66200DD6253 /* OcularTumorApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2592766E66200DD6253 /* OcularTumorApp.xcdatamodeld */; };
 		BF60F2652766E72A00DD6253 /* CameraPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2642766E72A00DD6253 /* CameraPage.swift */; };
 		BF60F2672766E74A00DD6253 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2662766E74A00DD6253 /* InformationView.swift */; };
 		BF60F2692766E75B00DD6253 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2682766E75B00DD6253 /* Persistence.swift */; };
@@ -24,8 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF60F24B2766E66000DD6253 /* CorneaApp_1.1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CorneaApp_1.1.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF60F24E2766E66000DD6253 /* CorneaApp_newer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorneaApp_newer.swift; sourceTree = "<group>"; };
+		BF60F24B2766E66000DD6253 /* OcularTumorApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OcularTumorApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF60F24E2766E66000DD6253 /* OcularTumorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OcularTumorApp.swift; sourceTree = "<group>"; };
 		BF60F2502766E66000DD6253 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BF60F2522766E66200DD6253 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF60F2552766E66200DD6253 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -39,7 +39,7 @@
 		BF60F2702766EA3000DD6253 /* ConstHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstHolder.swift; sourceTree = "<group>"; };
 		BF60F2722766EA4000DD6253 /* ResultHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultHolder.swift; sourceTree = "<group>"; };
 		BF60F2742766EA5700DD6253 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
-		BF60F2762766F2CE00DD6253 /* CorneaApp_1.1-newer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CorneaApp_1.1-newer-Info.plist"; sourceTree = SOURCE_ROOT; };
+		BF60F2762766F2CE00DD6253 /* OcularTumorApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OcularTumorApp-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 		BF60F2422766E66000DD6253 = {
 			isa = PBXGroup;
 			children = (
-				BF60F24D2766E66000DD6253 /* CorneaApp_newer */,
+				BF60F24D2766E66000DD6253 /* OcularTumorApp */,
 				BF60F24C2766E66000DD6253 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,22 +64,22 @@
 		BF60F24C2766E66000DD6253 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BF60F24B2766E66000DD6253 /* CorneaApp_1.1.app */,
+				BF60F24B2766E66000DD6253 /* OcularTumorApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BF60F24D2766E66000DD6253 /* CorneaApp_newer */ = {
+		BF60F24D2766E66000DD6253 /* OcularTumorApp */ = {
 			isa = PBXGroup;
 			children = (
-				BF60F2762766F2CE00DD6253 /* CorneaApp_1.1-newer-Info.plist */,
+				BF60F2762766F2CE00DD6253 /* OcularTumorApp-Info.plist */,
 				BF60F2632766E71200DD6253 /* Pages */,
 				BF60F2622766E6FB00DD6253 /* Extension */,
 				BF60F2522766E66200DD6253 /* Assets.xcassets */,
-				BF60F2592766E66200DD6253 /* CorneaApp.xcdatamodeld */,
+				BF60F2592766E66200DD6253 /* OcularTumorApp.xcdatamodeld */,
 				BF60F2542766E66200DD6253 /* Preview Content */,
 			);
-			path = CorneaApp_newer;
+			path = OcularTumorApp;
 			sourceTree = "<group>";
 		};
 		BF60F2542766E66200DD6253 /* Preview Content */ = {
@@ -90,17 +90,9 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		BF60F2612766E6F200DD6253 /* Pages */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pages;
-			sourceTree = "<group>";
-		};
 		BF60F2622766E6FB00DD6253 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				BF60F2612766E6F200DD6253 /* Pages */,
 				BF60F2702766EA3000DD6253 /* ConstHolder.swift */,
 				BF60F2722766EA4000DD6253 /* ResultHolder.swift */,
 				BF60F2742766EA5700DD6253 /* UIImageExtension.swift */,
@@ -114,11 +106,11 @@
 				BF60F2642766E72A00DD6253 /* CameraPage.swift */,
 				BF60F2502766E66000DD6253 /* ContentView.swift */,
 				BF60F2662766E74A00DD6253 /* InformationView.swift */,
-				BF60F2682766E75B00DD6253 /* Persistence.swift */,
 				BF60F26A2766E76B00DD6253 /* SavedDataView.swift */,
 				BF60F26C2766E77800DD6253 /* SendDataView.swift */,
 				BF60F26E2766E79D00DD6253 /* ImagePicker.swift */,
-				BF60F24E2766E66000DD6253 /* CorneaApp_newer.swift */,
+				BF60F2682766E75B00DD6253 /* Persistence.swift */,
+				BF60F24E2766E66000DD6253 /* OcularTumorApp.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -126,9 +118,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BF60F24A2766E66000DD6253 /* CorneaApp_1.1 */ = {
+		BF60F24A2766E66000DD6253 /* OcularTumorApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BF60F25E2766E66200DD6253 /* Build configuration list for PBXNativeTarget "CorneaApp_1.1" */;
+			buildConfigurationList = BF60F25E2766E66200DD6253 /* Build configuration list for PBXNativeTarget "OcularTumorApp" */;
 			buildPhases = (
 				BF60F2472766E66000DD6253 /* Sources */,
 				BF60F2482766E66000DD6253 /* Frameworks */,
@@ -138,9 +130,9 @@
 			);
 			dependencies = (
 			);
-			name = CorneaApp_1.1;
+			name = OcularTumorApp;
 			productName = CorneaApp_newer;
-			productReference = BF60F24B2766E66000DD6253 /* CorneaApp_1.1.app */;
+			productReference = BF60F24B2766E66000DD6253 /* OcularTumorApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -158,7 +150,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BF60F2462766E66000DD6253 /* Build configuration list for PBXProject "CorneaApp_1.1" */;
+			buildConfigurationList = BF60F2462766E66000DD6253 /* Build configuration list for PBXProject "OcularTumorApp" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -171,7 +163,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BF60F24A2766E66000DD6253 /* CorneaApp_1.1 */,
+				BF60F24A2766E66000DD6253 /* OcularTumorApp */,
 			);
 		};
 /* End PBXProject section */
@@ -194,7 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF60F26D2766E77800DD6253 /* SendDataView.swift in Sources */,
-				BF60F25B2766E66200DD6253 /* CorneaApp.xcdatamodeld in Sources */,
+				BF60F25B2766E66200DD6253 /* OcularTumorApp.xcdatamodeld in Sources */,
 				BF60F2512766E66000DD6253 /* ContentView.swift in Sources */,
 				BF60F2692766E75B00DD6253 /* Persistence.swift in Sources */,
 				BF60F2672766E74A00DD6253 /* InformationView.swift in Sources */,
@@ -203,7 +195,7 @@
 				BF60F2752766EA5700DD6253 /* UIImageExtension.swift in Sources */,
 				BF60F26F2766E79D00DD6253 /* ImagePicker.swift in Sources */,
 				BF60F26B2766E76B00DD6253 /* SavedDataView.swift in Sources */,
-				BF60F24F2766E66000DD6253 /* CorneaApp_newer.swift in Sources */,
+				BF60F24F2766E66000DD6253 /* OcularTumorApp.swift in Sources */,
 				BF60F2712766EA3000DD6253 /* ConstHolder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,11 +326,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CorneaApp_newer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"OcularTumorApp/Preview Content\"";
 				DEVELOPMENT_TEAM = FKLM5SV532;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "CorneaApp_1.1-newer-Info.plist";
+				INFOPLIST_FILE = "OcularTumorApp-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
@@ -354,7 +346,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "yk-gankeisei.CorneaApp-newer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yk-gankeisei.OcularTumorApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -369,11 +361,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CorneaApp_newer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"OcularTumorApp/Preview Content\"";
 				DEVELOPMENT_TEAM = FKLM5SV532;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "CorneaApp_1.1-newer-Info.plist";
+				INFOPLIST_FILE = "OcularTumorApp-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
@@ -389,7 +381,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "yk-gankeisei.CorneaApp-newer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yk-gankeisei.OcularTumorApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -400,7 +392,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BF60F2462766E66000DD6253 /* Build configuration list for PBXProject "CorneaApp_1.1" */ = {
+		BF60F2462766E66000DD6253 /* Build configuration list for PBXProject "OcularTumorApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BF60F25C2766E66200DD6253 /* Debug */,
@@ -409,7 +401,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BF60F25E2766E66200DD6253 /* Build configuration list for PBXNativeTarget "CorneaApp_1.1" */ = {
+		BF60F25E2766E66200DD6253 /* Build configuration list for PBXNativeTarget "OcularTumorApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BF60F25F2766E66200DD6253 /* Debug */,
@@ -421,13 +413,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		BF60F2592766E66200DD6253 /* CorneaApp.xcdatamodeld */ = {
+		BF60F2592766E66200DD6253 /* OcularTumorApp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				BF60F25A2766E66200DD6253 /* CorneaApp_newer.xcdatamodel */,
 			);
 			currentVersion = BF60F25A2766E66200DD6253 /* CorneaApp_newer.xcdatamodel */;
-			path = CorneaApp.xcdatamodeld;
+			path = OcularTumorApp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

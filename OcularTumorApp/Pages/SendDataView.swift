@@ -64,6 +64,7 @@ struct SendData: View {
                         .foregroundColor(Color.white)
                         .font(Font.largeTitle)
                 }
+                    .alert(isPresented: $showingAlert){Alert(title: Text("項目に空欄があります"))}
                     .frame(minWidth:0, maxWidth:CGFloat.infinity, minHeight: 75)
                     .background(Color.black)
                     .padding()
@@ -86,9 +87,9 @@ struct SendData: View {
                         .foregroundColor(Color.white)
                         .font(Font.largeTitle)
                 }
-                    .frame(minWidth:0, maxWidth:CGFloat.infinity, minHeight: 75)
-                    .background(Color.black)
-                    .padding()
+                .frame(minWidth:0, maxWidth:CGFloat.infinity, minHeight: 75)
+                .background(Color.black)
+                .padding()
             }
         }
     }

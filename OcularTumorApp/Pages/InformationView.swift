@@ -43,15 +43,16 @@ struct Informations: View {
                                UserDefaults.standard.set(user.selected_hospital, forKey:"hospitaldefault")
                            }
                     
-                        Picker(selection: $user.selected_side,
-                                   label: Text("右or左")) {
-                            ForEach(0..<user.side.count) {
-                                Text(self.user.side[$0])
-                                    }
-                            }
-                            .onChange(of: user.selected_side) {_ in
-                                self.user.isSendData = false
+                    Picker(selection: $user.selected_side,
+                               label: Text("右or左")) {
+                        ForEach(0..<user.side.count) {
+                            Text(self.user.side[$0])
                                 }
+                        }
+                        .onChange(of: user.selected_side) {_ in
+                            self.user.isSendData = false
+                            }
+                        .pickerStyle(SegmentedPickerStyle())
                         
                         Picker(selection: $user.selected_disease,
                                    label: Text("疾患")) {

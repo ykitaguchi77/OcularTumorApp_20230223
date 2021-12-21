@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF060B1D277071A700FA9450 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF060B1C277071A700FA9450 /* FirebaseAnalytics */; };
 		BF60F24F2766E66000DD6253 /* OcularTumorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F24E2766E66000DD6253 /* OcularTumorApp.swift */; };
 		BF60F2512766E66000DD6253 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2502766E66000DD6253 /* ContentView.swift */; };
 		BF60F2532766E66200DD6253 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF60F2522766E66200DD6253 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF060B1D277071A700FA9450 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +133,9 @@
 			dependencies = (
 			);
 			name = OcularTumorApp;
+			packageProductDependencies = (
+				BF060B1C277071A700FA9450 /* FirebaseAnalytics */,
+			);
 			productName = CorneaApp_newer;
 			productReference = BF60F24B2766E66000DD6253 /* OcularTumorApp.app */;
 			productType = "com.apple.product-type.application";
@@ -159,6 +164,9 @@
 				Base,
 			);
 			mainGroup = BF60F2422766E66000DD6253;
+			packageReferences = (
+				BF060B1B277071A700FA9450 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = BF60F24C2766E66000DD6253 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -335,6 +343,7 @@
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -370,6 +379,7 @@
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -411,6 +421,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BF060B1B277071A700FA9450 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BF060B1C277071A700FA9450 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF060B1B277071A700FA9450 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		BF60F2592766E66200DD6253 /* OcularTumorApp.xcdatamodeld */ = {

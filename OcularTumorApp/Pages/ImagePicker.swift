@@ -14,11 +14,16 @@
 
 
 import SwiftUI
+import UIKit
+import AssetsLibrary
+import Foundation
+import AVKit
+import Photos
+import AVFoundation
 
 struct Imagepicker : UIViewControllerRepresentable {
     @Binding var show:Bool
     @Binding var image:Data
-
     
     var sourceType:UIImagePickerController.SourceType
  
@@ -34,8 +39,8 @@ struct Imagepicker : UIViewControllerRepresentable {
         controller.delegate = context.coordinator
         
         //photo, movieモード選択
-        //controller.mediaTypes = ["public.image", "public.movie"]
-        controller.mediaTypes = ["public.image"]
+        controller.mediaTypes = ["public.image", "public.movie"]
+        //controller.mediaTypes = ["public.image"]
         controller.cameraCaptureMode = .photo // Default media type .photo vs .video
         controller.videoQuality = .typeHigh
         controller.cameraFlashMode = .on
@@ -50,6 +55,7 @@ struct Imagepicker : UIViewControllerRepresentable {
     class Coodinator: NSObject,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
         var parent : Imagepicker
+        
         
         init(parent : Imagepicker){
             self.parent = parent
@@ -79,24 +85,42 @@ struct Imagepicker : UIViewControllerRepresentable {
                     //撮影した画像をresultHolderに格納する
                     let imageOrientation = getImageOrientation()
                     let rawImage = UIImage(cgImage: cropped).rotatedBy(orientation: imageOrientation)
-                    setImage(progress: 0, cgImage: rawImage.cgImage!)
+                    ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawImage.cgImage!)
+                    //setImage(progress: 0, cgImage: rawImage.cgImage!)
                 }
 
                 if mediaType == "public.movie" {
                     print("Video Selected")
+                    
+                    // get a URL for the selected local file with nil safety
+                    guard let mediaUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
+                    self.parent.show.toggle()
+                    
+                    print(mediaUrl)
+                    
+                    //カメラロールに保存
+                    PHPhotoLibrary.shared().performChanges({
+                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: mediaUrl)
+                             })
+                    ////撮影した動画をresultHolderに格納する
+                    ResultHolder.GetInstance().SetMovieUrls(Url: mediaUrl.absoluteString)
+
+                    // Save movie to album
+
+
+                    }
                 }
-            }
+
     
             }
             
-
-
         
-        
-        //ResultHolderに格納
-        public func setImage(progress: Int, cgImage: CGImage){
-            ResultHolder.GetInstance().SetImage(index: progress, cgImage: cgImage)
-        }
+//        //ResultHolderに格納
+//        public func setImage(progress: Int, cgImage: CGImage){
+//            ResultHolder.GetInstance().SetImage(index: progress, cgImage: cgImage)
+//        }
+//
+
         
     }
 }

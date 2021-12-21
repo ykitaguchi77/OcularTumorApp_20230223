@@ -20,9 +20,9 @@ class ResultHolder{
         return instance!
     }
 
- 
- 
     private (set) public var Images: [Int:CGImage] = [:]
+    private (set) public var MovieUrl: String = ""
+    
     public func GetUIImages() -> [UIImage]{
         var uiImages: [UIImage] = []
         let length = Images.count
@@ -31,12 +31,17 @@ class ResultHolder{
                 uiImages.append(UIImage(cgImage: Images[i]! ))
             }
         }
-        
         return uiImages
     }
     
     public func SetImage(index: Int, cgImage: CGImage){
         Images[index] = cgImage
+    }
+    
+    
+    public func SetMovieUrls(Url:String){
+        print(MovieUrl)
+        MovieUrl = Url
     }
     
     

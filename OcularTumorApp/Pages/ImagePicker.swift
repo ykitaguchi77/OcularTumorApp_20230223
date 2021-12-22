@@ -10,9 +10,6 @@
 //https://off.tokyo/blog/how-to-access-info-plist/
 //https://ichi.pro/swift-uiimagepickercontroller-250133769115456
 
-
-
-
 import SwiftUI
 import UIKit
 import AssetsLibrary
@@ -45,6 +42,7 @@ struct Imagepicker : UIViewControllerRepresentable {
         controller.videoQuality = .typeHigh
         controller.cameraFlashMode = .on
         controller.cameraDevice = .rear //or front
+        controller.allowsEditing = false
         
         return controller
     }
@@ -98,6 +96,15 @@ struct Imagepicker : UIViewControllerRepresentable {
                     
                     print(mediaUrl)
                     
+                    let tempDirectory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
+                    let croppedMovieFileURL: URL = tempDirectory.appendingPathComponent("mytemp2.mov")
+                    
+                    MovieCropper.exportSquareMovie(sourceURL: mediaUrl, destinationURL: croppedMovieFileURL, fileType: .mov, completion: {
+                        // 正方形にクロッピングされた動画をフォトライブラリに保存
+                        self.saveToPhotoLibrary(fileURL: croppedMovieFileURL)
+                    })
+                  
+                    
                     //カメラロールに保存
                     PHPhotoLibrary.shared().performChanges({
                         PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: mediaUrl)
@@ -113,7 +120,18 @@ struct Imagepicker : UIViewControllerRepresentable {
 
     
             }
-            
+        func saveToPhotoLibrary(fileURL: URL) {
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL)
+            }) { saved, error in
+                let success = saved && (error == nil)
+                let title = success ? "Success" : "Error"
+                let message = success ? "Video saved." : "Failed to save video."
+                
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil))
+            }
+        }
         
 //        //ResultHolderに格納
 //        public func setImage(progress: Int, cgImage: CGImage){

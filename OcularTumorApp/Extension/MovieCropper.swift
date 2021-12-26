@@ -5,10 +5,13 @@
 //  Created by Yoshiyuki Kitaguchi on 2021/12/23.
 //
 
+import AVFoundation
 import Foundation
 import UIKit
 import AVKit
 
+
+//正方形に切り取り
 final class MovieCropper {
     
     static func exportSquareMovie(sourceURL: URL, destinationURL: URL, fileType: AVFileType, completion: (() -> Void)?) {
@@ -34,7 +37,10 @@ final class MovieCropper {
         var croppedVideoComposition: AVMutableVideoComposition? = nil
 
         let squareEdgeLength: CGFloat = videoTrack.naturalSize.height
-        let croppingRect: CGRect = CGRect(x: (videoTrack.naturalSize.width - squareEdgeLength) / 2, y: 0, width: squareEdgeLength, height: squareEdgeLength)
+        
+        //ビデオの切り抜きサイズ設定
+//        let croppingRect: CGRect = CGRect(x: (videoTrack.naturalSize.width - squareEdgeLength) / 2, y: 0, width: squareEdgeLength, height: squareEdgeLength)
+        let croppingRect: CGRect = CGRect(x: (videoTrack.naturalSize.width - squareEdgeLength) / 4, y: 0, width: squareEdgeLength, height: squareEdgeLength)
         let transform: CGAffineTransform = videoTrack.preferredTransform.translatedBy(x: -croppingRect.minX, y: -croppingRect.minY)
         
         // layer instruction を正方形に
@@ -75,4 +81,24 @@ final class MovieCropper {
         
     }
     
+}
+
+
+//フレームから静止画切り出し
+extension AVAsset {
+
+    func generateThumbnail(completion: @escaping (UIImage?) -> Void) {
+        DispatchQueue.global().async {
+            let imageGenerator = AVAssetImageGenerator(asset: self)
+            let time = CMTime(seconds: 0.0, preferredTimescale: 600)
+            let times = [NSValue(time: time)]
+            imageGenerator.generateCGImagesAsynchronously(forTimes: times, completionHandler: { _, image, _, _, _ in
+                if let image = image {
+                    completion(UIImage(cgImage: image, scale: 0, orientation: .right))
+                } else {
+                    completion(nil)
+                }
+            })
+        }
+    }
 }

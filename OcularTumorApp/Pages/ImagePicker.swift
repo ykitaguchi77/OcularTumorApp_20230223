@@ -9,6 +9,7 @@
 //https://hatsunem.hatenablog.com/entry/2018/12/04/004823
 //https://off.tokyo/blog/how-to-access-info-plist/
 //https://ichi.pro/swift-uiimagepickercontroller-250133769115456
+//正方形動画撮影　https://superhahnah.com/swift-square-av-capture/
 
 import SwiftUI
 import UIKit
@@ -44,6 +45,13 @@ struct Imagepicker : UIViewControllerRepresentable {
         controller.cameraDevice = .rear //or front
         controller.allowsEditing = false
         
+        //overlay image
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenWidth = min(screenSize.width, screenSize.height)
+        let screenHeight = min(screenSize.width, screenSize.height)
+//        controller.cameraOverlayView = CircleView(frame: CGRect(x: (screenWidth / 2) - 50, y: (screenWidth / 2) + 25, width: 100, height: 100))
+        controller.cameraOverlayView = RectangleView(frame: CGRect(x: 0, y: screenWidth / 8, width: screenWidth, height: screenHeight))
+        
         return controller
     }
     
@@ -54,7 +62,6 @@ struct Imagepicker : UIViewControllerRepresentable {
 
         var parent : Imagepicker
         
-        
         init(parent : Imagepicker){
             self.parent = parent
         }
@@ -64,6 +71,7 @@ struct Imagepicker : UIViewControllerRepresentable {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            
             
             // Check for the media type
             if let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String {
@@ -101,26 +109,17 @@ struct Imagepicker : UIViewControllerRepresentable {
                     
                     MovieCropper.exportSquareMovie(sourceURL: mediaUrl, destinationURL: croppedMovieFileURL, fileType: .mov, completion: {
                         // 正方形にクロッピングされた動画をフォトライブラリに保存
-                        self.saveToPhotoLibrary(fileURL: croppedMovieFileURL)
+                        self.saveMovieToPhotoLibrary(fileURL: croppedMovieFileURL)
+                        self.saveToResultHolder(fileURL: croppedMovieFileURL)
                     })
-                  
-                    
-                    //カメラロールに保存
-                    PHPhotoLibrary.shared().performChanges({
-                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: mediaUrl)
-                             })
-                    ////撮影した動画をresultHolderに格納する
-                    ResultHolder.GetInstance().SetMovieUrls(Url: mediaUrl.absoluteString)
-
-                    // Save movie to album
-
-
-                    }
                 }
+            }
 
     
-            }
-        func saveToPhotoLibrary(fileURL: URL) {
+        }
+        
+        func saveMovieToPhotoLibrary(fileURL: URL) {
+            //カメラロールに保存
             PHPhotoLibrary.shared().performChanges({
                 PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL)
             }) { saved, error in
@@ -133,12 +132,79 @@ struct Imagepicker : UIViewControllerRepresentable {
             }
         }
         
-//        //ResultHolderに格納
-//        public func setImage(progress: Int, cgImage: CGImage){
-//            ResultHolder.GetInstance().SetImage(index: progress, cgImage: cgImage)
-//        }
-//
+        //サムネイル切り出し　https://qiita.com/doge_kun55/items/727b5caf100a40739bdf
+        func thumnailImageForFileUrl(fileUrl: URL) -> UIImage? {
+                let asset = AVAsset(url: fileUrl)
 
+                let imageGenerator = AVAssetImageGenerator(asset: asset)
+
+                do {
+                    let thumnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1,timescale: 60), actualTime: nil)
+                    print("サムネイルの切り取り成功！")
+                    return UIImage(cgImage: thumnailCGImage, scale: 0, orientation: .right)
+                }catch let err{
+                    print("エラー\(err)")
+                }
+                return nil
+            }
         
+        
+        
+        func saveToResultHolder(fileURL: URL){
+            //ResultHolderに保存
+            ResultHolder.GetInstance().SetMovieUrls(Url: fileURL.absoluteString)
+        }
+    }
+}
+
+
+class CircleView: UIView {
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.clear
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func draw(_ rect: CGRect) {
+        if let context = UIGraphicsGetCurrentContext() {
+            context.setLineWidth(3.0)
+            UIColor.red.set()
+
+            let center = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
+            let radius = (frame.size.width - 10) / 2
+
+            context.addArc(center: center, radius: radius, startAngle: 0.0, endAngle: .pi * 2.0, clockwise: true)
+            context.strokePath()
+        }
+    }
+}
+
+
+class RectangleView: UIView {
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.clear
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func draw(_ rect: CGRect) {
+        if let context = UIGraphicsGetCurrentContext() {
+            context.setLineWidth(3.0)
+            UIColor.red.set()
+
+            let width = frame.size.width
+            let height = frame.size.width
+
+            context.addRect(CGRect(origin:CGPoint(x:0, y:width/8), size: CGSize(width:width, height:height)))
+            context.strokePath()
+        }
     }
 }

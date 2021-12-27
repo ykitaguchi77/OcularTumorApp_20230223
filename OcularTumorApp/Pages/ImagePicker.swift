@@ -100,25 +100,42 @@ struct Imagepicker : UIViewControllerRepresentable {
                     
                     // get a URL for the selected local file with nil safety
                     guard let mediaUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
-                    self.parent.show.toggle()
-                    
+
                     print(mediaUrl)
                     
                     let tempDirectory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
                     let croppedMovieFileURL: URL = tempDirectory.appendingPathComponent("mytemp2.mov")
                     
-                    //temporary pathにサムネイルを保存
-                    let thumbnailImage = thumnailImageForFileUrl(fileUrl: croppedMovieFileURL)?.cgImage
-                    let rawThumbnail = UIImage(cgImage: thumbnailImage!)
-                    ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawThumbnail.cgImage!)
-                    
-                                    
 
                     MovieCropper.exportSquareMovie(sourceURL: mediaUrl, destinationURL: croppedMovieFileURL, fileType: .mov, completion: {
-//                        // 正方形にクロッピングされた動画をフォトライブラリに保存
-//                        self.saveMovieToPhotoLibrary(fileURL: croppedMovieFileURL)
+                        // 正方形にクロッピングされた動画をフォトライブラリに保存
+                        self.saveMovieToPhotoLibrary(fileURL: croppedMovieFileURL)
                         self.saveToResultHolder(fileURL: croppedMovieFileURL)
                     })
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        // 1秒後に実行したいコードを書く
+
+                        //temporary pathにサムネイルを保存
+                        let thumbnailImage = self.thumnailImageForFileUrl(fileUrl: croppedMovieFileURL)?.cgImage
+                        //サムネイルをresultHolderに格納
+                        do{
+                            let rawImage = try UIImage(cgImage: thumbnailImage!)
+                            ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawImage.cgImage!)
+                        }catch{
+                            print("Thumbnail image is still processing")
+                        }
+                        //撮影画面を消す
+                        self.parent.show.toggle()
+                    }
+                    
+                        
+                  
+
+
+
+                    
+                    
                 }
             }
 
@@ -149,7 +166,7 @@ struct Imagepicker : UIViewControllerRepresentable {
 
                 do {
                     let thumnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1,timescale: 60), actualTime: nil)
-                    print("サムネイルの切り取り成功！")
+                    //print("サムネイルの切り取り成功！")
                     return UIImage(cgImage: thumnailCGImage, scale: 0, orientation: .right)
                 }catch let err{
                     print("エラー\(err)")

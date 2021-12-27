@@ -15,15 +15,18 @@ class ResultHolder{
     public static func GetInstance() -> ResultHolder{
         if (instance == nil) {
             instance = ResultHolder()
+            
         }
-        
+
         return instance!
+
     }
 
     private (set) public var Images: [Int:CGImage] = [:]
     private (set) public var MovieUrl: String = ""
     
     public func GetUIImages() -> [UIImage]{
+        //print("get UI images")
         var uiImages: [UIImage] = []
         let length = Images.count
         for i in 0 ..< length {
@@ -36,6 +39,7 @@ class ResultHolder{
     
     public func SetImage(index: Int, cgImage: CGImage){
         Images[index] = cgImage
+        //print("set images to resultHolder")
     }
     
     

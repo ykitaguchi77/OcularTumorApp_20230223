@@ -140,10 +140,6 @@ extension CGImage {
         let top = (self.height - rectlength) / 2
         let croppingRect = CGRect(x: left, y: top, width: rectlength, height: rectlength)
         let croppedImage = self.cropping(to: croppingRect)!
-        print(self.width)
-        print(self.height)
-        print(left)
-        print(top)
         return croppedImage
     }
 }

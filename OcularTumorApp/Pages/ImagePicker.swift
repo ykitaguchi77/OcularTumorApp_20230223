@@ -107,9 +107,16 @@ struct Imagepicker : UIViewControllerRepresentable {
                     let tempDirectory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
                     let croppedMovieFileURL: URL = tempDirectory.appendingPathComponent("mytemp2.mov")
                     
+                    //temporary pathにサムネイルを保存
+                    let thumbnailImage = thumnailImageForFileUrl(fileUrl: croppedMovieFileURL)?.cgImage
+                    let rawThumbnail = UIImage(cgImage: thumbnailImage!)
+                    ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawThumbnail.cgImage!)
+                    
+                                    
+
                     MovieCropper.exportSquareMovie(sourceURL: mediaUrl, destinationURL: croppedMovieFileURL, fileType: .mov, completion: {
-                        // 正方形にクロッピングされた動画をフォトライブラリに保存
-                        self.saveMovieToPhotoLibrary(fileURL: croppedMovieFileURL)
+//                        // 正方形にクロッピングされた動画をフォトライブラリに保存
+//                        self.saveMovieToPhotoLibrary(fileURL: croppedMovieFileURL)
                         self.saveToResultHolder(fileURL: croppedMovieFileURL)
                     })
                 }
@@ -122,14 +129,16 @@ struct Imagepicker : UIViewControllerRepresentable {
             //カメラロールに保存
             PHPhotoLibrary.shared().performChanges({
                 PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL)
-            }) { saved, error in
-                let success = saved && (error == nil)
-                let title = success ? "Success" : "Error"
-                let message = success ? "Video saved." : "Failed to save video."
-                
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil))
-            }
+            })
+// アラーム"Cannot be called with asCopy = NO on non-main thread."が出るので削除
+//            { saved, error in
+//                let success = saved && (error == nil)
+//                let title = success ? "Success" : "Error"
+//                let message = success ? "Video saved." : "Failed to save video."
+//
+//                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil))
+//            }
         }
         
         //サムネイル切り出し　https://qiita.com/doge_kun55/items/727b5caf100a40739bdf

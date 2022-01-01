@@ -48,6 +48,13 @@ class ResultHolder{
         MovieUrl = Url
     }
     
+    public func GetMovieUrls() ->URL{
+        var Url = URL(string: MovieUrl)!
+        return Url
+    }
+    
+    
+    
     
     public func GetImageJsons() -> [String]{
         var imageJsons:[String] = []

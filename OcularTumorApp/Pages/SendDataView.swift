@@ -4,36 +4,49 @@
 //
 //  Created by Yoshiyuki Kitaguchi on 2021/04/18.
 //
+
+
+//★動画のプレビュー表示を実現。課題は以下の通り。
+//動画か静止画どちらかのみ表示するようにする
+//保存後にtemporaryな動画と静止画を消去する
+//動画のfilemanagerへの保存
+
+
 import SwiftUI
 import CoreData
 import CryptoKit
+import AVKit
 
 struct SendData: View {
     @ObservedObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) var viewContext
     @State private var showingAlert: Bool = false
+    private let player = AVPlayer(url: ResultHolder.GetInstance().GetMovieUrls())
         
     var body: some View {
         
         VStack{
                 GeometryReader { bodyView in
                     VStack{
-                        Text("内容を確認してください").padding().foregroundColor(Color.black)
-                            .font(Font.title)
-                        
-                        ScrollView(.vertical){
+                        ScrollView{
+                            Text("内容を確認してください").padding().foregroundColor(Color.black)
+                                .font(Font.title)
+                            
                             GetImageStack(images: ResultHolder.GetInstance().GetUIImages(), shorterSide: GetShorterSide(screenSize: bodyView.size))
+                            
+                            VideoPlayer(player: player).frame(width: 300, height:300)
+                            
+                            
+                            HStack{
+                                Text("撮影日時:")
+                                Text(self.user.date, style: .date)
+                            }
+                            Text("ID: \(self.user.id)")
+                            Text("施設: \(self.user.hospitals[user.selected_hospital])")
+                            Text("診断名: \(user.disease[user.selected_disease])")
+                            Text("自由記載: \(self.user.free_disease)")
                         }
-                        
-                        HStack{
-                            Text("撮影日時:")
-                            Text(self.user.date, style: .date)
-                        }
-                        Text("ID: \(self.user.id)")
-                        Text("施設: \(self.user.hospitals[user.selected_hospital])")
-                        Text("診断名: \(user.disease[user.selected_disease])")
-                        Text("自由記載: \(self.user.free_disease)")
                     }
                 }
 
@@ -154,8 +167,9 @@ struct SendData: View {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         //let directory = self.user.hashid+".png"
         let fileURL = documentsURL.appendingPathComponent(self.user.hashid+".png")
+        let movieURL = documentsURL.appendingPathComponent(self.user.hashid+".mp4")
         //print(fileURL)
-        //pngで保存
+        //pngを保存
         for i in 0..<images.count{
             let pngImageData = UIImage.pngData(images[i])
             // jpgで保存する場合
@@ -167,6 +181,13 @@ struct SendData: View {
                 //エラー処理
                 return false
             }
+            
+        //mp4を保存
+            
+            
+            
+            
+            
         
         let fileURL2 = documentsURL.appendingPathComponent(self.user.hashid+".json")
         do {
@@ -211,4 +232,39 @@ struct SendData: View {
         return shorterSide
     }
     
+}
+
+
+//ビデオ再生ビュー
+struct PlayerView: UIViewRepresentable {
+    let player: AVPlayer
+
+    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
+    }
+
+    func makeUIView(context: Context) -> UIView {
+        return PlayerUIView(player: player)
+    }
+
+}
+
+
+class PlayerUIView: UIView {
+    private let playerLayer = AVPlayerLayer()
+
+    init(player: AVPlayer) {
+        super.init(frame: .zero)
+        playerLayer.player = player
+        layer.addSublayer(playerLayer)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer.frame = bounds
+    }
+
 }

@@ -113,49 +113,45 @@ struct Imagepicker : UIViewControllerRepresentable {
                         self.saveToResultHolder(fileURL: croppedMovieFileURL)
                     })
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        // 1秒後に実行したいコードを書く
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        // 動画の処理でエラーが出る場合にはここの数字を延ばす
 
                         //temporary pathにサムネイルを保存
                         let thumbnailImage = self.thumnailImageForFileUrl(fileUrl: croppedMovieFileURL)?.cgImage
                         //サムネイルをresultHolderに格納
-                        do{
-                            let rawImage = try UIImage(cgImage: thumbnailImage!)
-                            ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawImage.cgImage!)
-                        }catch{
-                            print("Thumbnail image is still processing")
-                        }
+                        let rawImage = UIImage(cgImage: thumbnailImage!)
+                        ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawImage.cgImage!)
+
                         //撮影画面を消す
                         self.parent.show.toggle()
                     }
-                    
-                        
-                  
-
-
-
-                    
-                    
                 }
             }
-
-    
         }
         
+        
+
         func saveMovieToPhotoLibrary(fileURL: URL) {
             //カメラロールに保存
             PHPhotoLibrary.shared().performChanges({
                 PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL)
             })
-// アラーム"Cannot be called with asCopy = NO on non-main thread."が出るので削除
-//            { saved, error in
-//                let success = saved && (error == nil)
-//                let title = success ? "Success" : "Error"
-//                let message = success ? "Video saved." : "Failed to save video."
-//
-//                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil))
-//            }
+//            { (isCompleted, error) in
+//                if isCompleted {
+//                  // フォトライブラリに書き出し成功したらtempfileから削除する
+//                  do {
+//                    try FileManager.default.removeItem(atPath: fileURL.path)
+//                    print("フォトライブラリ書き出し・ファイル削除成功 : \(fileURL.lastPathComponent)")
+//                  }
+//                  catch {
+//                    print("フォトライブラリ書き出し後のファイル削除失敗 : \(fileURL.lastPathComponent)")
+//                  }
+//                }
+//                else {
+//                  print("フォトライブラリ書き出し失敗 : \(fileURL.lastPathComponent)")
+//                }
+//              }
+
         }
         
         //サムネイル切り出し　https://qiita.com/doge_kun55/items/727b5caf100a40739bdf

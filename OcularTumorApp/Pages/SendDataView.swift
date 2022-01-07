@@ -22,21 +22,28 @@ struct SendData: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) var viewContext
     @State private var showingAlert: Bool = false
-    private let player = AVPlayer(url: ResultHolder.GetInstance().GetMovieUrls())
+    private let player = AVPlayer(url: URL(string:ResultHolder.GetInstance().GetMovieUrls())!)
         
     var body: some View {
         
         VStack{
                 GeometryReader { bodyView in
                     VStack{
+                        
+
                         ScrollView{
                             Text("内容を確認してください").padding().foregroundColor(Color.black)
                                 .font(Font.title)
                             
-                            GetImageStack(images: ResultHolder.GetInstance().GetUIImages(), shorterSide: GetShorterSide(screenSize: bodyView.size))
                             
-                            VideoPlayer(player: player).frame(width: 300, height:300)
-                            
+                            ZStack{
+                                if ResultHolder.GetInstance().GetMovieUrls() == "" {
+                                    GetImageStack(images: ResultHolder.GetInstance().GetUIImages(), shorterSide: GetShorterSide(screenSize: bodyView.size))
+                                }else{
+                                    VideoPlayer(player: player).frame(width: 300, height:300)
+                                }
+                                
+                            }
                             
                             HStack{
                                 Text("撮影日時:")

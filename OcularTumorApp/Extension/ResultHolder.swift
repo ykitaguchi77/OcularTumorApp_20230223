@@ -48,8 +48,8 @@ class ResultHolder{
         MovieUrl = Url
     }
     
-    public func GetMovieUrls() ->URL{
-        var Url = URL(string: MovieUrl)!
+    public func GetMovieUrls() ->String{
+        let Url = MovieUrl
         return Url
     }
     

@@ -196,8 +196,7 @@ struct SendData: View {
             //mp4を保存
             let fileType: AVFileType = AVFileType.mp4
             // 動画をエクスポートする
-            exportMovie(sourceURL: movieURL, destinationURL: documentsURL, fileType: fileType)
-            ResultHolder.GetInstance().SetMovieUrls(Url: "")
+            exportMovie(sourceURL: URL(string:ResultHolder.GetInstance().GetMovieUrls())!, destinationURL: movieURL, fileType: fileType)
         }
             
             
@@ -270,7 +269,7 @@ struct SendData: View {
                 }
 
         // エクスポートするためのセッションを作成
-        let assetExport = AVAssetExportSession.init(asset: mixComposition, presetName: AVAssetExportPresetMediumQuality)
+        let assetExport = AVAssetExportSession.init(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality)
 
         // エクスポートするファイルの種類を設定
         assetExport?.outputFileType = fileType

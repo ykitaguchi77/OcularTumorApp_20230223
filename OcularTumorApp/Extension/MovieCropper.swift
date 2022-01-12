@@ -40,7 +40,7 @@ final class MovieCropper {
         
         //ビデオの切り抜きサイズ設定
 //        let croppingRect: CGRect = CGRect(x: (videoTrack.naturalSize.width - squareEdgeLength) / 2, y: 0, width: squareEdgeLength, height: squareEdgeLength)
-        let croppingRect: CGRect = CGRect(x: (videoTrack.naturalSize.width - squareEdgeLength) / 4, y: 0, width: squareEdgeLength, height: squareEdgeLength)
+        let croppingRect: CGRect = CGRect(x: (videoTrack.naturalSize.width - squareEdgeLength) / 3, y: 0, width: squareEdgeLength, height: squareEdgeLength)
         let transform: CGAffineTransform = videoTrack.preferredTransform.translatedBy(x: -croppingRect.minX, y: -croppingRect.minY)
         
         // layer instruction を正方形に

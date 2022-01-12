@@ -92,6 +92,7 @@ struct Imagepicker : UIViewControllerRepresentable {
                     let imageOrientation = getImageOrientation()
                     let rawImage = UIImage(cgImage: cropped).rotatedBy(orientation: imageOrientation)
                     ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawImage.cgImage!)
+                    ResultHolder.GetInstance().SetMovieUrls(Url: "")
                     //setImage(progress: 0, cgImage: rawImage.cgImage!)
                 }
 
@@ -117,10 +118,10 @@ struct Imagepicker : UIViewControllerRepresentable {
                         // 動画の処理でエラーが出る場合にはここの数字を延ばす
 
                         //temporary pathにサムネイルを保存
-                        let thumbnailImage = self.thumnailImageForFileUrl(fileUrl: croppedMovieFileURL)?.cgImage
+                        //let thumbnailImage = self.thumnailImageForFileUrl(fileUrl: croppedMovieFileURL)?.cgImage
                         //サムネイルをresultHolderに格納
-                        let rawImage = UIImage(cgImage: thumbnailImage!)
-                        ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawImage.cgImage!)
+                        //let rawImage = UIImage(cgImage: thumbnailImage!)
+                        //ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawImage.cgImage!)
 
                         //撮影画面を消す
                         self.parent.show.toggle()
@@ -180,30 +181,30 @@ struct Imagepicker : UIViewControllerRepresentable {
 }
 
 
-class CircleView: UIView {
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = UIColor.clear
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func draw(_ rect: CGRect) {
-        if let context = UIGraphicsGetCurrentContext() {
-            context.setLineWidth(3.0)
-            UIColor.red.set()
-
-            let center = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
-            let radius = (frame.size.width - 10) / 2
-
-            context.addArc(center: center, radius: radius, startAngle: 0.0, endAngle: .pi * 2.0, clockwise: true)
-            context.strokePath()
-        }
-    }
-}
+//class CircleView: UIView {
+//
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        self.backgroundColor = UIColor.clear
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//
+//    override func draw(_ rect: CGRect) {
+//        if let context = UIGraphicsGetCurrentContext() {
+//            context.setLineWidth(3.0)
+//            UIColor.red.set()
+//
+//            let center = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
+//            let radius = (frame.size.width - 10) / 2
+//
+//            context.addArc(center: center, radius: radius, startAngle: 0.0, endAngle: .pi * 2.0, clockwise: true)
+//            context.strokePath()
+//        }
+//    }
+//}
 
 
 class RectangleView: UIView {

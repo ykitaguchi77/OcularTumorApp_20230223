@@ -7,9 +7,9 @@
 
 
 //★動画のプレビュー表示を実現。課題は以下の通り。
-//動画か静止画どちらかのみ表示するようにする
-//保存後にtemporaryな動画と静止画を消去する
-//動画のfilemanagerへの保存
+//動画か静止画どちらかのみ表示するようにする →動画アドレスがないときにゼロでエラーが出ることへの対策
+//
+//動画のfilemanagerへの保存→NSError[0]が出る
 
 
 import SwiftUI
@@ -22,15 +22,14 @@ struct SendData: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) var viewContext
     @State private var showingAlert: Bool = false
+    
     private let player = AVPlayer(url: URL(string:ResultHolder.GetInstance().GetMovieUrls())!)
-        
+    
     var body: some View {
         
         VStack{
                 GeometryReader { bodyView in
                     VStack{
-                        
-
                         ScrollView{
                             Text("内容を確認してください").padding().foregroundColor(Color.black)
                                 .font(Font.title)
@@ -40,7 +39,7 @@ struct SendData: View {
                                 if ResultHolder.GetInstance().GetMovieUrls() == "" {
                                     GetImageStack(images: ResultHolder.GetInstance().GetUIImages(), shorterSide: GetShorterSide(screenSize: bodyView.size))
                                 }else{
-                                    VideoPlayer(player: player).frame(width: 300, height:300)
+                                    VideoPlayer(player: player).frame(width: bodyView.size.width, height:bodyView.size.width)
                                 }
                                 
                             }
@@ -176,26 +175,33 @@ struct SendData: View {
         let fileURL = documentsURL.appendingPathComponent(self.user.hashid+".png")
         let movieURL = documentsURL.appendingPathComponent(self.user.hashid+".mp4")
         //print(fileURL)
-        //pngを保存
-        for i in 0..<images.count{
-            let pngImageData = UIImage.pngData(images[i])
-            // jpgで保存する場合
-            // let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
-            do {
-                try pngImageData()!.write(to: fileURL)
-                print("successfully saved PNG to doc")
-            } catch {
-                //エラー処理
-                return false
-            }
-            
-        //mp4を保存
-            
-            
-            
-            
-            
         
+        //動画が保存されていない場合
+        if ResultHolder.GetInstance().GetMovieUrls() == ""{
+            //pngを保存
+            for i in 0..<images.count{
+                let pngImageData = UIImage.pngData(images[i])
+                // jpgで保存する場合
+                // let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
+                do {
+                    try pngImageData()!.write(to: fileURL)
+                    print("successfully saved PNG to doc")
+                } catch {
+                    //エラー処理
+                    return false
+                }
+            }
+        }else{
+            //動画が保存されている場合
+            //mp4を保存
+            let fileType: AVFileType = AVFileType.mp4
+            // 動画をエクスポートする
+            exportMovie(sourceURL: movieURL, destinationURL: documentsURL, fileType: fileType)
+            ResultHolder.GetInstance().SetMovieUrls(Url: "")
+        }
+            
+            
+        //jsonを保存
         let fileURL2 = documentsURL.appendingPathComponent(self.user.hashid+".json")
         do {
             try jsonfile.write(to: fileURL2, atomically: true, encoding: String.Encoding.utf8)
@@ -208,8 +214,6 @@ struct SendData: View {
         return true
     }
         
-        return true
-    }
 
     public func GetImageStack(images: [UIImage], shorterSide: CGFloat) -> some View {
             let padding: CGFloat = 10.0
@@ -238,6 +242,55 @@ struct SendData: View {
         let shorterSide = (screenSize.width < screenSize.height) ? screenSize.width : screenSize.height
         return shorterSide
     }
+    
+    
+    func exportMovie(sourceURL: URL, destinationURL: URL, fileType: AVFileType) -> Void {
+
+        let asset = AVAsset(url: sourceURL)
+
+            let mixComposition = AVMutableComposition()
+
+            let videoTrack = mixComposition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid)
+
+            try! videoTrack?.insertTimeRange(CMTimeRangeMake(start: .zero, duration: asset.duration), of: asset.tracks(withMediaType: .video)[0], at: CMTime.zero)
+
+            let audioTrack = mixComposition.addMutableTrack(withMediaType: .audio, preferredTrackID: Int32(kCMPersistentTrackID_Invalid))
+
+                if let track = asset.tracks(withMediaType: .audio).first {
+
+                    do {
+                        try audioTrack?.insertTimeRange(CMTimeRangeMake(start: .zero, duration: asset.duration), of: track, at: .zero)
+                    } catch {
+                        print("error")
+                    }
+
+                } else {
+                    mixComposition.removeTrack(audioTrack!)
+                    print("no audio detected, removed the track")
+                }
+
+        // エクスポートするためのセッションを作成
+        let assetExport = AVAssetExportSession.init(asset: mixComposition, presetName: AVAssetExportPresetMediumQuality)
+
+        // エクスポートするファイルの種類を設定
+        assetExport?.outputFileType = fileType
+
+        // エクスポート先URLを設定
+        assetExport?.outputURL = destinationURL
+
+        // エクスポート先URLに既にファイルが存在していれば、削除する (上書きはできないようなので)
+//        if FileManager.default.fileExists(atPath: (assetExport?.outputURL?.path)!) {
+//            try! FileManager.default.removeItem(atPath: (assetExport?.outputURL?.path)!)
+//        }
+        // エクスポートする
+        assetExport?.exportAsynchronously(completionHandler: {
+            // エクスポート完了後に実行したいコードを記述
+            print("successfully exported mp4 to doc")
+        })
+
+    }
+                                           
+
     
 }
 
@@ -275,3 +328,6 @@ class PlayerUIView: UIView {
     }
 
 }
+                                           
+                                           
+                                           

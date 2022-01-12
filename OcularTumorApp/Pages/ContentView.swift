@@ -77,6 +77,7 @@ struct ContentView: View {
             Button(action: {
                 self.goTakePhoto = true /*またはself.show.toggle() */
                 self.user.isSendData = false //撮影済みを解除
+                ResultHolder.GetInstance().SetMovieUrls(Url: "")  //動画の保存先をクリア
             }) {
                 HStack{
                     Image(systemName: "camera")

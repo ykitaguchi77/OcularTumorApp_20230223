@@ -23,7 +23,7 @@ struct SendData: View {
     @Environment(\.managedObjectContext) var viewContext
     @State private var showingAlert: Bool = false
     
-    private let player = AVPlayer(url: URL(string:ResultHolder.GetInstance().GetMovieUrls())!)
+    //private let player = AVPlayer(url: URL(string:ResultHolder.GetInstance().GetMovieUrls())!)
     
     var body: some View {
         
@@ -39,6 +39,7 @@ struct SendData: View {
                                 if ResultHolder.GetInstance().GetMovieUrls() == "" {
                                     GetImageStack(images: ResultHolder.GetInstance().GetUIImages(), shorterSide: GetShorterSide(screenSize: bodyView.size))
                                 }else{
+                                    let player = AVPlayer(url: URL(string:ResultHolder.GetInstance().GetMovieUrls())!)
                                     VideoPlayer(player: player).frame(width: bodyView.size.width, height:bodyView.size.width)
                                 }
                                 

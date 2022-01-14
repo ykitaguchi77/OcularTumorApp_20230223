@@ -60,7 +60,7 @@ final class MovieCropper {
         croppedVideoComposition?.renderSize = CGSize(width: squareEdgeLength, height: squareEdgeLength)
     
         // エクスポートの設定。先程の video compsition をエクスポートに使うよう設定する。
-        let assetExport = AVAssetExportSession.init(asset: mixComposition, presetName: AVAssetExportPresetMediumQuality)
+        let assetExport = AVAssetExportSession.init(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality)
         assetExport?.outputFileType = fileType
         assetExport?.outputURL = destinationURL
         if let videoComposition = croppedVideoComposition {

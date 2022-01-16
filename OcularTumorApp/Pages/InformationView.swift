@@ -13,24 +13,42 @@ struct Informations: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) private var viewContext
     @State var isSaved = false
-    @State private var goTakePhoto: Bool = false  //撮影ボタン    
+    @State private var goTakePhoto: Bool = false  //撮影ボタン
+    @State private var temp = "" //スキャン結果格納用の変数
     
     var body: some View {
         NavigationView{
                 Form{
-                    HStack{
-                        Text("入力日時")
-                        Text(self.user.date, style: .date)
-                    }
+                        HStack{
+                            Text("入力日時")
+                            Text(self.user.date, style: .date)
+                        }
                     
-                    //DatePicker("入力日時", selection: $user.date)
+                        //DatePicker("入力日時", selection: $user.date)
                     
-                    HStack{
-                        Text(" I D ")
-                        TextField("idを入力してください", text: $user.id)
-                        }.onChange(of: user.id) { _ in
-                            self.user.isSendData = false
+                        HStack{
+                            Text(" I D ")
+                            TextField("idを入力してください", text: $user.id)
+                                .keyboardType(.numbersAndPunctuation)
+                                .onChange(of: user.id) { _ in
+                                self.user.isSendData = false
+                                }
+                                .onChange(of: temp) { _ in
+                                    if temp != ""{
+                                        self.user.id = temp
+                                        temp = ""
+                                    }
+                                }
+                            VStack {
+                                ScanTextField("Scan", text: $temp)
+                                            .padding(8)
+                                            .frame(height: 30)
+                                            .background(Color(.lightGray).opacity(0.2))
+                                            .cornerRadius(10)
+                                            .padding(.horizontal)
+                                    }
                             }
+                    
                         
                         Picker(selection: $user.selected_hospital,
                                    label: Text("施設")) {
@@ -43,16 +61,16 @@ struct Informations: View {
                                UserDefaults.standard.set(user.selected_hospital, forKey:"hospitaldefault")
                            }
                     
-                    Picker(selection: $user.selected_side,
-                               label: Text("右or左")) {
-                        ForEach(0..<user.side.count) {
-                            Text(self.user.side[$0])
-                                }
-                        }
-                        .onChange(of: user.selected_side) {_ in
-                            self.user.isSendData = false
+                        Picker(selection: $user.selected_side,
+                                   label: Text("右or左")) {
+                            ForEach(0..<user.side.count) {
+                                Text(self.user.side[$0])
+                                    }
                             }
-                        .pickerStyle(SegmentedPickerStyle())
+                            .onChange(of: user.selected_side) {_ in
+                                self.user.isSendData = false
+                                }
+                            .pickerStyle(SegmentedPickerStyle())
                         
                         Picker(selection: $user.selected_disease,
                                    label: Text("疾患")) {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BF060B1D277071A700FA9450 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF060B1C277071A700FA9450 /* FirebaseAnalytics */; };
-		BF5356AC27945227004C4BF5 /* ScanTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5356AB27945227004C4BF5 /* ScanTextField.swift */; };
 		BF5356AE2794F06D004C4BF5 /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5356AD2794F06D004C4BF5 /* ScanButton.swift */; };
 		BF60F24F2766E66000DD6253 /* OcularTumorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F24E2766E66000DD6253 /* OcularTumorApp.swift */; };
 		BF60F2512766E66000DD6253 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2502766E66000DD6253 /* ContentView.swift */; };
@@ -28,7 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF5356AB27945227004C4BF5 /* ScanTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTextField.swift; sourceTree = "<group>"; };
 		BF5356AD2794F06D004C4BF5 /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
 		BF60F24B2766E66000DD6253 /* OcularTumorApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OcularTumorApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF60F24E2766E66000DD6253 /* OcularTumorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OcularTumorApp.swift; sourceTree = "<group>"; };
@@ -103,7 +101,6 @@
 			children = (
 				BF60F2702766EA3000DD6253 /* ConstHolder.swift */,
 				BF5356AD2794F06D004C4BF5 /* ScanButton.swift */,
-				BF5356AB27945227004C4BF5 /* ScanTextField.swift */,
 				BF60F2722766EA4000DD6253 /* ResultHolder.swift */,
 				BF60F2742766EA5700DD6253 /* UIImageExtension.swift */,
 				BFE83E3E27738A58001FEBDE /* MovieCropper.swift */,
@@ -206,7 +203,6 @@
 				BF60F25B2766E66200DD6253 /* OcularTumorApp.xcdatamodeld in Sources */,
 				BF60F2512766E66000DD6253 /* ContentView.swift in Sources */,
 				BF60F2692766E75B00DD6253 /* Persistence.swift in Sources */,
-				BF5356AC27945227004C4BF5 /* ScanTextField.swift in Sources */,
 				BFE83E3F27738A58001FEBDE /* MovieCropper.swift in Sources */,
 				BF60F2672766E74A00DD6253 /* InformationView.swift in Sources */,
 				BF60F2732766EA4000DD6253 /* ResultHolder.swift in Sources */,

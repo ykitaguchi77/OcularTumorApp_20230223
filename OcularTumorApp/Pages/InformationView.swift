@@ -26,28 +26,6 @@ struct Informations: View {
                     
                         //DatePicker("入力日時", selection: $user.date)
                     
-//                        HStack{
-//                            Text(" I D ")
-//                            TextField("idを入力してください", text: $user.id)
-//                                .keyboardType(.numbersAndPunctuation)
-//                                .onChange(of: user.id) { _ in
-//                                self.user.isSendData = false
-//                                }
-//                                .onChange(of: temp) { _ in
-//                                    if temp != ""{
-//                                        self.user.id = temp
-//                                        temp = ""
-//                                    }
-//                                }
-//                            VStack {
-//                                ScanTextField("Scan", text: $temp)
-//                                            .padding(8)
-//                                            .frame(height: 30)
-//                                            .background(Color(.lightGray).opacity(0.2))
-//                                            .cornerRadius(10)
-//                                            .padding(.horizontal)
-//                                    }
-//                            }
                         
                         HStack {
                             Text("I D ")

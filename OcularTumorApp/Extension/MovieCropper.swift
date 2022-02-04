@@ -19,18 +19,21 @@ final class MovieCropper {
         let avAsset: AVAsset = AVAsset(url: sourceURL)
         
         let videoTrack: AVAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video)[0]
-        let audioTracks: [AVAssetTrack] = avAsset.tracks(withMediaType: AVMediaType.audio)
-        let audioTrack: AVAssetTrack? =  audioTracks.count > 0 ? audioTracks[0] : nil
+//        今回はaudioは挿入しない
+//        let audioTracks: [AVAssetTrack] = avAsset.tracks(withMediaType: AVMediaType.audio)
+//        let audioTrack: AVAssetTrack? =  audioTracks.count > 0 ? audioTracks[0] : nil
         
         let mixComposition : AVMutableComposition = AVMutableComposition()
         
         let compositionVideoTrack: AVMutableCompositionTrack = mixComposition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: kCMPersistentTrackID_Invalid)!
-        let compositionAudioTrack: AVMutableCompositionTrack? = audioTrack != nil
-            ? mixComposition.addMutableTrack(withMediaType: AVMediaType.audio, preferredTrackID: kCMPersistentTrackID_Invalid)!
-            : nil
+//        let compositionAudioTrack: AVMutableCompositionTrack? = audioTrack != nil
+//            ? mixComposition.addMutableTrack(withMediaType: AVMediaType.audio, preferredTrackID: kCMPersistentTrackID_Invalid)!
+//            : nil
         
         try! compositionVideoTrack.insertTimeRange(CMTimeRangeMake(start: CMTime.zero, duration: avAsset.duration), of: videoTrack, at: CMTime.zero)
-        try! compositionAudioTrack?.insertTimeRange(CMTimeRangeMake(start: CMTime.zero, duration: avAsset.duration), of: audioTrack!, at: CMTime.zero)
+
+//        try! compositionAudioTrack?.insertTimeRange(CMTimeRangeMake(start: CMTime.zero, duration: avAsset.duration), of: audioTrack!, at: CMTime.zero)
+        
         
         compositionVideoTrack.preferredTransform = videoTrack.preferredTransform
         

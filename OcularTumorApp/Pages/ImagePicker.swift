@@ -47,9 +47,6 @@ struct Imagepicker : UIViewControllerRepresentable {
         
         //overlay image
         let screenWidth = UIScreen.main.bounds.size.width
-        let screenHeight = UIScreen.main.bounds.size.height
-        print(screenWidth)
-        print(screenHeight)
 //        controller.cameraOverlayView = CircleView(frame: CGRect(x: (screenWidth / 2) - 50, y: (screenWidth / 2) + 25, width: 100, height: 100))
         controller.cameraOverlayView = RectangleView(frame: CGRect(x: 0, y: screenWidth*27/96, width: screenWidth, height: screenWidth))
         

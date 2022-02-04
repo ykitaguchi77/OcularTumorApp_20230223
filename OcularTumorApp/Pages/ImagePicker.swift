@@ -46,11 +46,12 @@ struct Imagepicker : UIViewControllerRepresentable {
         controller.allowsEditing = false
         
         //overlay image
-        let screenSize: CGRect = UIScreen.main.bounds
-        let screenWidth = min(screenSize.width, screenSize.height)
-        let screenHeight = min(screenSize.width, screenSize.height)
+        let screenWidth = UIScreen.main.bounds.size.width
+        let screenHeight = UIScreen.main.bounds.size.height
+        print(screenWidth)
+        print(screenHeight)
 //        controller.cameraOverlayView = CircleView(frame: CGRect(x: (screenWidth / 2) - 50, y: (screenWidth / 2) + 25, width: 100, height: 100))
-        controller.cameraOverlayView = RectangleView(frame: CGRect(x: 0, y: screenWidth / 8, width: screenWidth, height: screenHeight))
+        controller.cameraOverlayView = RectangleView(frame: CGRect(x: 0, y: screenWidth*27/96, width: screenWidth, height: screenWidth))
         
         return controller
     }
@@ -224,9 +225,8 @@ class RectangleView: UIView {
             UIColor.red.set()
 
             let width = frame.size.width
-            let height = frame.size.width
 
-            context.addRect(CGRect(origin:CGPoint(x:0, y:width/8), size: CGSize(width:width, height:height)))
+            context.addRect(CGRect(origin:CGPoint(x:0, y:0), size: CGSize(width:width, height:width)))
             context.strokePath()
         }
     }

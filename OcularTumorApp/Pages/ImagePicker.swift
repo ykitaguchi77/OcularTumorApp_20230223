@@ -39,7 +39,7 @@ struct Imagepicker : UIViewControllerRepresentable {
         //photo, movieモード選択
         controller.mediaTypes = ["public.image", "public.movie"]
         //controller.mediaTypes = ["public.image"]
-        controller.cameraCaptureMode = .photo // Default media type .photo vs .video
+        controller.cameraCaptureMode = .video // Default media type .photo vs .video
         controller.videoQuality = .typeHigh
         controller.cameraFlashMode = .on
         controller.cameraDevice = .rear //or front

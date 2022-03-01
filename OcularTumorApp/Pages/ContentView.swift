@@ -150,6 +150,7 @@ struct ContentView: View {
             HStack{
             Button(action: {
                 self.user.sourceType = UIImagePickerController.SourceType.photoLibrary
+                self.user.isSendData = false //撮影済みを解除
                 self.uploadData = true /*またはself.show.toggle() */
                 
             }) {

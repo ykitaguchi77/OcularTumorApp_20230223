@@ -24,6 +24,7 @@ struct Imagepicker : UIViewControllerRepresentable {
     @Binding var image:Data
     
     var sourceType:UIImagePickerController.SourceType
+    var equipmentVideo:Bool
  
     func makeCoordinator() -> Imagepicker.Coodinator {
         
@@ -31,25 +32,37 @@ struct Imagepicker : UIViewControllerRepresentable {
     }
       
     func makeUIViewController(context: UIViewControllerRepresentableContext<Imagepicker>) -> UIImagePickerController {
-        
         let controller = UIImagePickerController()
-        controller.sourceType = sourceType
-        controller.delegate = context.coordinator
-        
-        //photo, movieモード選択
-        controller.mediaTypes = ["public.image", "public.movie"]
-        //controller.mediaTypes = ["public.image"]
-        controller.cameraCaptureMode = .video // Default media type .photo vs .video
-        controller.videoQuality = .typeHigh
-        controller.cameraFlashMode = .on
-        controller.cameraDevice = .rear //or front
-        controller.allowsEditing = false
-        
-        //overlay image
-        let screenWidth = UIScreen.main.bounds.size.width
-//        controller.cameraOverlayView = CircleView(frame: CGRect(x: (screenWidth / 2) - 50, y: (screenWidth / 2) + 25, width: 100, height: 100))
-        controller.cameraOverlayView = RectangleView(frame: CGRect(x: 0, y: screenWidth*27/96, width: screenWidth, height: screenWidth))
-        
+        if self.sourceType == .camera{
+            controller.sourceType = sourceType
+            controller.delegate = context.coordinator
+            //photo, movieモード選択
+            //controller.mediaTypes = ["public.image", "public.movie"]
+            //controller.mediaTypes = ["public.image"]
+            //controller.cameraCaptureMode = .video // Default media type .photo vs .video
+            controller.videoQuality = .typeHigh
+            controller.cameraFlashMode = .on
+            controller.cameraDevice = .rear //or front
+            controller.allowsEditing = false
+            let screenWidth = UIScreen.main.bounds.size.width
+            //overlay image
+            //controller.cameraOverlayView = CircleView(frame: CGRect(x: (screenWidth / 2) - 50, y: (screenWidth / 2) + 25, width: 100, height: 100))
+            switch equipmentVideo{
+            case true:
+                controller.mediaTypes = ["public.movie"]
+                controller.cameraCaptureMode = .video
+                controller.cameraOverlayView = RectangleView(frame: CGRect(x: 0, y: screenWidth*0.4, width: screenWidth, height: screenWidth))
+            case false:
+                controller.mediaTypes = ["public.image"]
+                controller.cameraCaptureMode = .photo
+                controller.cameraOverlayView = RectangleView(frame: CGRect(x: 0, y: screenWidth*0.28, width: screenWidth, height: screenWidth))
+            }
+        }
+        else if self.sourceType == .photoLibrary{
+            controller.sourceType = sourceType
+            controller.delegate = context.coordinator
+            controller.mediaTypes = ["public.image", "public.movie"]
+        }
         return controller
     }
     
@@ -69,7 +82,6 @@ struct Imagepicker : UIViewControllerRepresentable {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            
             
             // Check for the media type
             if let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String {
@@ -153,21 +165,21 @@ struct Imagepicker : UIViewControllerRepresentable {
 
         }
         
-        //サムネイル切り出し　https://qiita.com/doge_kun55/items/727b5caf100a40739bdf
-        func thumnailImageForFileUrl(fileUrl: URL) -> UIImage? {
-                let asset = AVAsset(url: fileUrl)
-
-                let imageGenerator = AVAssetImageGenerator(asset: asset)
-
-                do {
-                    let thumnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1,timescale: 60), actualTime: nil)
-                    //print("サムネイルの切り取り成功！")
-                    return UIImage(cgImage: thumnailCGImage, scale: 0, orientation: .right)
-                }catch let err{
-                    print("エラー\(err)")
-                }
-                return nil
-            }
+//        //サムネイル切り出し　https://qiita.com/doge_kun55/items/727b5caf100a40739bdf
+//        func thumnailImageForFileUrl(fileUrl: URL) -> UIImage? {
+//                let asset = AVAsset(url: fileUrl)
+//
+//                let imageGenerator = AVAssetImageGenerator(asset: asset)
+//
+//                do {
+//                    let thumnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1,timescale: 60), actualTime: nil)
+//                    //print("サムネイルの切り取り成功！")
+//                    return UIImage(cgImage: thumnailCGImage, scale: 0, orientation: .right)
+//                }catch let err{
+//                    print("エラー\(err)")
+//                }
+//                return nil
+//            }
         
         
         

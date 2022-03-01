@@ -14,6 +14,7 @@ struct Informations: View {
     @State var isSaved = false
     @State private var goTakePhoto: Bool = false  //撮影ボタン
     @State private var temp = "" //スキャン結果格納用の変数
+
     
     var body: some View {
         NavigationView{
@@ -98,7 +99,7 @@ struct Informations: View {
                 .background(Color.black)
                 .padding()
                 .sheet(isPresented: self.$goTakePhoto) {
-                     CameraPage(user: user)
+                    CameraPage(user: user)
                 }
     }
 }

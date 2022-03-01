@@ -13,17 +13,17 @@ struct CameraPage: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var imageData : Data = .init(capacity:0)
     @State var rawImage : Data = .init(capacity:0)
-    @State var source:UIImagePickerController.SourceType = .camera
 
     @State var isActionSheet = true
     @State var isImagePicker = true
+
     
     var body: some View {
             NavigationView{
                 VStack(spacing:0){
                         ZStack{
                             NavigationLink(
-                                destination: Imagepicker(show: $isImagePicker, image: $imageData, sourceType: source),
+                                destination: Imagepicker(show: $isImagePicker, image: $imageData, sourceType: self.user.sourceType, equipmentVideo: self.user.equipmentVideo),
                                 isActive:$isImagePicker,
                                 label: {
                                     Text("TakePhoto")

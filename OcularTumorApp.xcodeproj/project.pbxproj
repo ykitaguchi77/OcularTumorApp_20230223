@@ -13,11 +13,8 @@
 		BF60F2512766E66000DD6253 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2502766E66000DD6253 /* ContentView.swift */; };
 		BF60F2532766E66200DD6253 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF60F2522766E66200DD6253 /* Assets.xcassets */; };
 		BF60F2562766E66200DD6253 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF60F2552766E66200DD6253 /* Preview Assets.xcassets */; };
-		BF60F25B2766E66200DD6253 /* OcularTumorApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2592766E66200DD6253 /* OcularTumorApp.xcdatamodeld */; };
 		BF60F2652766E72A00DD6253 /* CameraPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2642766E72A00DD6253 /* CameraPage.swift */; };
 		BF60F2672766E74A00DD6253 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2662766E74A00DD6253 /* InformationView.swift */; };
-		BF60F2692766E75B00DD6253 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2682766E75B00DD6253 /* Persistence.swift */; };
-		BF60F26B2766E76B00DD6253 /* SavedDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F26A2766E76B00DD6253 /* SavedDataView.swift */; };
 		BF60F26D2766E77800DD6253 /* SendDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F26C2766E77800DD6253 /* SendDataView.swift */; };
 		BF60F26F2766E79D00DD6253 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F26E2766E79D00DD6253 /* ImagePicker.swift */; };
 		BF60F2712766EA3000DD6253 /* ConstHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2702766EA3000DD6253 /* ConstHolder.swift */; };
@@ -33,11 +30,8 @@
 		BF60F2502766E66000DD6253 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BF60F2522766E66200DD6253 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF60F2552766E66200DD6253 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		BF60F25A2766E66200DD6253 /* CorneaApp_newer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CorneaApp_newer.xcdatamodel; sourceTree = "<group>"; };
 		BF60F2642766E72A00DD6253 /* CameraPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPage.swift; sourceTree = "<group>"; };
 		BF60F2662766E74A00DD6253 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
-		BF60F2682766E75B00DD6253 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		BF60F26A2766E76B00DD6253 /* SavedDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDataView.swift; sourceTree = "<group>"; };
 		BF60F26C2766E77800DD6253 /* SendDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDataView.swift; sourceTree = "<group>"; };
 		BF60F26E2766E79D00DD6253 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		BF60F2702766EA3000DD6253 /* ConstHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstHolder.swift; sourceTree = "<group>"; };
@@ -82,7 +76,6 @@
 				BF60F2632766E71200DD6253 /* Pages */,
 				BF60F2622766E6FB00DD6253 /* Extension */,
 				BF60F2522766E66200DD6253 /* Assets.xcassets */,
-				BF60F2592766E66200DD6253 /* OcularTumorApp.xcdatamodeld */,
 				BF60F2542766E66200DD6253 /* Preview Content */,
 			);
 			path = OcularTumorApp;
@@ -114,10 +107,8 @@
 				BF60F2642766E72A00DD6253 /* CameraPage.swift */,
 				BF60F2502766E66000DD6253 /* ContentView.swift */,
 				BF60F2662766E74A00DD6253 /* InformationView.swift */,
-				BF60F26A2766E76B00DD6253 /* SavedDataView.swift */,
 				BF60F26C2766E77800DD6253 /* SendDataView.swift */,
 				BF60F26E2766E79D00DD6253 /* ImagePicker.swift */,
-				BF60F2682766E75B00DD6253 /* Persistence.swift */,
 				BF60F24E2766E66000DD6253 /* OcularTumorApp.swift */,
 			);
 			path = Pages;
@@ -200,9 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF60F26D2766E77800DD6253 /* SendDataView.swift in Sources */,
-				BF60F25B2766E66200DD6253 /* OcularTumorApp.xcdatamodeld in Sources */,
 				BF60F2512766E66000DD6253 /* ContentView.swift in Sources */,
-				BF60F2692766E75B00DD6253 /* Persistence.swift in Sources */,
 				BFE83E3F27738A58001FEBDE /* MovieCropper.swift in Sources */,
 				BF60F2672766E74A00DD6253 /* InformationView.swift in Sources */,
 				BF60F2732766EA4000DD6253 /* ResultHolder.swift in Sources */,
@@ -210,7 +199,6 @@
 				BF60F2752766EA5700DD6253 /* UIImageExtension.swift in Sources */,
 				BF5356AE2794F06D004C4BF5 /* ScanButton.swift in Sources */,
 				BF60F26F2766E79D00DD6253 /* ImagePicker.swift in Sources */,
-				BF60F26B2766E76B00DD6253 /* SavedDataView.swift in Sources */,
 				BF60F24F2766E66000DD6253 /* OcularTumorApp.swift in Sources */,
 				BF60F2712766EA3000DD6253 /* ConstHolder.swift in Sources */,
 			);
@@ -350,11 +338,11 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Need camera access for uploading Images";
-				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Need folder access for saving images and videos";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Need location access for updating nearby friends";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app will use your location to show you cool stuff near you.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Need microphone access for uploading videos";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Need library access for uploading images";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "NeedLibrary access for uploading Images";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -362,6 +350,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -390,11 +379,11 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Need camera access for uploading Images";
-				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Need folder access for saving images and videos";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Need location access for updating nearby friends";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app will use your location to show you cool stuff near you.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Need microphone access for uploading videos";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Need library access for uploading images";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "NeedLibrary access for uploading Images";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -402,6 +391,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,19 +446,6 @@
 			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		BF60F2592766E66200DD6253 /* OcularTumorApp.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				BF60F25A2766E66200DD6253 /* CorneaApp_newer.xcdatamodel */,
-			);
-			currentVersion = BF60F25A2766E66200DD6253 /* CorneaApp_newer.xcdatamodel */;
-			path = OcularTumorApp.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = BF60F2432766E66000DD6253 /* Project object */;
 }

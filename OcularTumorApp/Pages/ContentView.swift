@@ -29,16 +29,10 @@ class User : ObservableObject {
 
 struct ContentView: View {
     @ObservedObject var user = User()
-    //CoreDataの取り扱い
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.newdate, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
     @State private var goTakePhoto: Bool = false  //撮影ボタン
     @State private var isPatientInfo: Bool = false  //患者情報入力ボタン
     @State private var goSendData: Bool = false  //送信ボタン
-    @State private var savedData: Bool = false  //送信ボタン
+    @State private var uploadData: Bool = false  //送信ボタン
     @State private var newPatient: Bool = false  //送信ボタン
     
     
@@ -128,10 +122,10 @@ struct ContentView: View {
             }
             
             HStack{
-            Button(action: { self.savedData = true /*またはself.show.toggle() */ }) {
+            Button(action: { self.uploadData = true /*またはself.show.toggle() */ }) {
                 HStack{
                     Image(systemName: "folder")
-                    Text("リスト")
+                    Text("Load")
                 }
                     .foregroundColor(Color.white)
                     .font(Font.largeTitle)
@@ -139,8 +133,8 @@ struct ContentView: View {
                 .frame(minWidth:0, maxWidth:200, minHeight: 75)
                 .background(Color.black)
                 .padding()
-            .sheet(isPresented: self.$savedData) {
-                SavedData(user: user)
+            .sheet(isPresented: self.$uploadData) {
+                //UploadData(user: user)
             }
             
             Button(action: { self.newPatient = true /*またはself.show.toggle() */ }) {

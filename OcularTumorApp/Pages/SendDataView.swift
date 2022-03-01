@@ -20,7 +20,6 @@ import AVKit
 struct SendData: View {
     @ObservedObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Environment(\.managedObjectContext) var viewContext
     @State private var showingAlert: Bool = false
     
     //private let player = AVPlayer(url: URL(string:ResultHolder.GetInstance().GetMovieUrls())!)
@@ -91,8 +90,8 @@ struct SendData: View {
             } else{
                 Button(action: {
                 showingAlert = false
-                SetCoreData(context: viewContext)
                 SaveToResultHolder()
+                GenerateHashID()
                 //SendDataset()
                 SaveToDoc()
                 self.user.isSendData = true
@@ -115,6 +114,19 @@ struct SendData: View {
     }
             
     
+    public func GenerateHashID(){
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.dateStyle = .medium
+        dateFormatter.dateFormat = "yyyyMMdd"
+        
+        //newdateid: 20211204-11223344-3
+        let newdateid = "\(dateFormatter.string(from:self.user.date))-\(self.user.id)-\(self.user.imageNum)"
+        let dateid = Data(newdateid.utf8)
+        let hashid = SHA256.hash(data: dateid)
+        user.hashid = hashid.compactMap { String(format: "%02x", $0) }.joined()
+        print(user.hashid)
+    }
 
     
     //ResultHolderにテキストデータを格納
@@ -137,34 +149,6 @@ struct SendData: View {
 
     
     
-    
-    public func SetCoreData(context: NSManagedObjectContext){
-        let newItem = Item(context: viewContext)
-        newItem.newdate = self.user.date
-        newItem.newid = self.user.id
-        newItem.newimagenum = numToString(num: self.user.imageNum)
-        newItem.newside = self.user.side[user.selected_side]
-        newItem.newhospitals = self.user.hospitals[user.selected_hospital]
-        newItem.newdisease = self.user.disease[user.selected_disease]
-        newItem.newfreedisease = self.user.free_disease
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        dateFormatter.dateStyle = .medium
-        dateFormatter.dateFormat = "yyyyMMdd"
-        
-        //newdateid: 20211204-11223344-3
-        newItem.newdateid = "\(dateFormatter.string(from:self.user.date))-\(self.user.id)-\(self.user.imageNum)"
-        let dateid = Data(newItem.newdateid!.utf8)
-        let hashid = SHA256.hash(data: dateid)
-        
-        user.hashid = hashid.compactMap { String(format: "%02x", $0) }.joined()
-        print(self.user.hashid)
-        newItem.newhashid = self.user.hashid
-        
-        try! context.save()
-        self.user.isNewData = true
-        }
 
 
     //private func saveToDoc (image: UIImage, fileName: String ) -> Bool{
@@ -186,6 +170,7 @@ struct SendData: View {
                 // let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
                 do {
                     try pngImageData()!.write(to: fileURL)
+                    print(fileURL)
                     print("successfully saved PNG to doc")
                 } catch {
                     //エラー処理
@@ -205,6 +190,7 @@ struct SendData: View {
         let fileURL2 = documentsURL.appendingPathComponent(self.user.hashid+".json")
         do {
             try jsonfile.write(to: fileURL2, atomically: true, encoding: String.Encoding.utf8)
+            print(fileURL2)
             print("successfully saved json to doc")
         } catch {
             //エラー処理

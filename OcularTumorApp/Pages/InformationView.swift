@@ -11,7 +11,6 @@ import SwiftUI
 struct Informations: View {
     @ObservedObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Environment(\.managedObjectContext) private var viewContext
     @State var isSaved = false
     @State private var goTakePhoto: Bool = false  //撮影ボタン
     @State private var temp = "" //スキャン結果格納用の変数

@@ -14,12 +14,20 @@ class User : ObservableObject {
     @Published var date: Date = Date()
     @Published var id: String = ""
     @Published var hashid: String = ""
+    @Published var selected_gender: Int = 0
     @Published var selected_side: Int = 0
     @Published var selected_hospital: Int = 0
     @Published var selected_disease: Int = 0
     @Published var free_disease: String = ""
+    @Published var ssmixpath: String = "" //JOIR転送用フォルダ
+    @Published var gender: [String] = ["", "男", "女"]
+    @Published var genderCode: [String] = ["O", "M", "F"]
+    @Published var birthdate: String = ""
     @Published var side: [String] = ["", "右", "左"]
+    @Published var sideCode: [String] = ["N", "R", "L"]
     @Published var hospitals: [String] = ["", "筑波大", "大阪大", "東京歯科大市川", "鳥取大", "宮田眼科", "順天堂大", "ツカザキ病院", "広島大", "新潟大", "富山大", "福島県立医大", "東京医大"]
+    @Published var hospitalsAbbreviated: [String] = ["", "TKB", "OSK", "TKS", "TTR", "MYT", "JTD", "TKZ", "HRS", "NGT", "TOY", "FKS", "TKI"]
+    @Published var hospitalcode: [String] = ["", "5110051", "9900249", "2712404", "8010028", "0211008", "0514836", "4009334", "8010017", "8910011", "8010035", "0116930", "0415018"]
     @Published var disease: [String] = ["", "正常", "", "<<結膜良性腫瘍>>", "翼状片", "偽翼状片", "瞼裂斑", "結膜母斑", "結膜色素沈着（非腫瘍性）", "結膜色素沈着（非腫瘍性）", "結膜下出血", "結膜嚢胞", "血管腫", "肉芽腫", "結膜良性腫瘍その他","", "<<結膜悪性腫瘍>>", "結膜扁平上皮癌", "結膜悪性黒色腫", "結膜悪性リンパ腫", "結膜上皮内新生物", "結膜悪性腫瘍その他", "", "<<眼瞼良性腫瘍>>", "霰粒腫", "麦粒腫", "眼瞼母斑", "脂漏性角化症", "乳頭腫", "血管腫", "肉芽腫", "マイボーム腺嚢胞","眼瞼良性腫瘍その他","", "<<眼瞼悪性腫瘍>>","脂腺癌", "扁平上皮癌", "基底細胞癌", "眼瞼悪性腫瘍その他", "", "分類不能（自由記載）"]
     @Published var imageNum: Int = 0 //写真の枚数（何枚目の撮影か）
     @Published var isNewData: Bool = false
@@ -181,13 +189,15 @@ struct ContentView: View {
                     //データの初期化
                     self.user.date = Date()
                     self.user.id = ""
+                    self.user.birthdate = ""
                     self.user.imageNum = 0
+                    self.user.selected_gender = 0
                     self.user.selected_side = 0
                     self.user.selected_hospital = 0
                     self.user.selected_disease = 0
                     self.user.free_disease = ""
                     self.user.isSendData = false
-                    
+                    self.user.ssmixpath = ""
                 }),
                       secondaryButton:.destructive(Text("いいえ"), action:{}))
                 }

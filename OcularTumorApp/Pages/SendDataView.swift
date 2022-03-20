@@ -89,14 +89,15 @@ struct SendData: View {
                     .padding()
             } else{
                 Button(action: {
-                showingAlert = false
-                SaveToResultHolder()
-                GenerateHashID()
-                //SendDataset()
-                SaveToDoc()
-                self.user.isSendData = true
-                self.user.imageNum += 1 //画像番号を増やす
-                self.presentationMode.wrappedValue.dismiss()
+                    showingAlert = false
+                    GenerateHashID()
+                    SaveToResultHolder()
+                    ssmix2Folder() //保存用のフォルダを作成
+                    createXml()
+                    SaveToDoc()
+                    self.user.isSendData = true
+                    self.user.imageNum += 1 //画像番号を増やす
+                    self.presentationMode.wrappedValue.dismiss()
                })
                 {
                     HStack{
@@ -113,26 +114,32 @@ struct SendData: View {
         }
     }
             
-    
+    //JOIRのHASH化プロトコル
     public func GenerateHashID(){
+        let id = self.user.id
+        let gender = self.user.gender[user.selected_gender]
+
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        dateFormatter.dateStyle = .medium
-        dateFormatter.dateFormat = "yyyyMMdd"
-        
-        //newdateid: 20211204-11223344-3
-        let newdateid = "\(dateFormatter.string(from:self.user.date))-\(self.user.id)-\(self.user.imageNum)"
-        let dateid = Data(newdateid.utf8)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        var birthdate = self.user.birthdate
+        birthdate.insert("-", at: birthdate.index(birthdate.startIndex, offsetBy: 6))
+        birthdate.insert("-", at: birthdate.index(birthdate.startIndex, offsetBy: 4))
+
+        let hospitalcode = self.user.hospitalcode[user.selected_gender]
+        let newid = id + gender + birthdate + hospitalcode
+        let dateid = Data(newid.utf8)
         let hashid = SHA256.hash(data: dateid)
         user.hashid = hashid.compactMap { String(format: "%02x", $0) }.joined()
-        print(user.hashid)
-    }
 
+        print("Generated hashid: \(user.hashid)")
+    }
     
     //ResultHolderにテキストデータを格納
     public func SaveToResultHolder(){
         //var imagenum: String = String(user.imageNum)
-        ResultHolder.GetInstance().SetAnswer(q1: self.stringDate(), q2: user.hashid, q3: user.id, q4: self.numToString(num: self.user.imageNum), q5: self.user.side[user.selected_side], q6: self.user.hospitals[user.selected_hospital], q7: self.user.disease[user.selected_disease], q8: user.free_disease)
+        ResultHolder.GetInstance().SetAnswer(q1: stringDate(), q2: user.hashid, q3: user.id, q4: self.numToString(num: self.user.imageNum), q5: self.user.side[user.selected_side], q6: self.user.hospitals[user.selected_hospital], q7: self.user.disease[user.selected_disease], q8: self.user.free_disease, q9: self.user.gender[user.selected_gender], q10: self.user.birthdate)
     }
     
     public func stringDate()->String{
@@ -156,10 +163,11 @@ struct SendData: View {
         let images = ResultHolder.GetInstance().GetUIImages()
         let jsonfile = ResultHolder.GetInstance().GetAnswerJson()
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        //let directory = self.user.hashid+".png"
-        let fileURL = documentsURL.appendingPathComponent(self.user.hashid+".png")
-        let movieURL = documentsURL.appendingPathComponent(self.user.hashid+".mp4")
-        //print(fileURL)
+        let photoURL = documentsURL.appendingPathComponent(imageName()+".png")
+        let movieURL = documentsURL.appendingPathComponent(imageName()+".mp4")
+        let ssmixURL = URL(string: self.user.ssmixpath)!
+        let ssmixPhotoURL = ssmixURL.appendingPathComponent(imageName()+".png")
+        let ssmixMovieURL = ssmixURL.appendingPathComponent(imageName()+".mp4")
         
         //動画が保存されていない場合
         if ResultHolder.GetInstance().GetMovieUrls() == ""{
@@ -169,10 +177,21 @@ struct SendData: View {
                 // jpgで保存する場合
                 // let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
                 do {
-                    try pngImageData()!.write(to: fileURL)
-                    print(fileURL)
+                    try pngImageData()!.write(to: photoURL)
                     print("successfully saved PNG to doc")
                 } catch {
+                    //エラー処理
+                    print("image save error")
+                    return false
+                }
+                
+                print("ssmixPhotoURL: \(ssmixPhotoURL)")
+                do {
+                    try pngImageData()!.write(to: ssmixPhotoURL)
+                    print("successfully saved PNG to doc (ssmix)")
+                    
+                } catch {
+                    print("image save error (ssmix)")
                     //エラー処理
                     return false
                 }
@@ -183,14 +202,17 @@ struct SendData: View {
             let fileType: AVFileType = AVFileType.mp4
             // 動画をエクスポートする
             exportMovie(sourceURL: URL(string:ResultHolder.GetInstance().GetMovieUrls())!, destinationURL: movieURL, fileType: fileType)
+            exportMovie(sourceURL: URL(string:ResultHolder.GetInstance().GetMovieUrls())!, destinationURL: ssmixMovieURL, fileType: fileType)
         }
             
             
         //jsonを保存
-        let fileURL2 = documentsURL.appendingPathComponent(self.user.hashid+".json")
+        let jsonURL = documentsURL.appendingPathComponent(imageName()+".json")
+        let ssmixJsonURL = ssmixURL.appendingPathComponent(imageName()+".json")
+        
+        print("ssmixJsonURL: \(ssmixJsonURL)")
         do {
-            try jsonfile.write(to: fileURL2, atomically: true, encoding: String.Encoding.utf8)
-            print(fileURL2)
+            try jsonfile.write(to: jsonURL, atomically: true, encoding: String.Encoding.utf8)
             print("successfully saved json to doc")
         } catch {
             //エラー処理
@@ -199,7 +221,6 @@ struct SendData: View {
         }
         return true
     }
-        
 
     public func GetImageStack(images: [UIImage], shorterSide: CGFloat) -> some View {
             let padding: CGFloat = 10.0
@@ -228,6 +249,240 @@ struct SendData: View {
         let shorterSide = (screenSize.width < screenSize.height) ? screenSize.width : screenSize.height
         return shorterSide
     }
+    
+
+    //JOIRの画像命名
+    public func imageName() -> String{
+        let id = self.user.hashid
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        let examDate = dateFormatter.string(from: self.user.date)
+        let kind = "SUMAHO"
+        let side = self.user.sideCode[user.selected_side]
+        let imageNum = String(format: "%03d", self.user.imageNum)
+        let imageName = id + "_" + examDate + "_" + kind + "_" + side + "_" + imageNum
+        //print(imageName)
+        return imageName
+    }
+    
+    
+    //xmlファイルを作成
+    public func createXml(){
+        
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateFormat = "yyyyMMdd"
+        dateFormatter1.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter1.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        let examDate1 = dateFormatter1.string(from: self.user.date)
+        
+        let dateFormatter2 = DateFormatter()
+        dateFormatter2.dateFormat = "yyyy-MM-dd"
+        dateFormatter2.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter2.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        let examDate2 = dateFormatter2.string(from: self.user.date)
+        
+        let dateFormatter3 = DateFormatter()
+        dateFormatter3.dateFormat = "HH:mm:SS"
+        dateFormatter3.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter3.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        let examTime = dateFormatter3.string(from: self.user.date)
+        
+        let id = self.user.hashid
+        let gender = self.user.genderCode[user.selected_gender]
+        let side = self.user.side[user.selected_side]
+        //dateOfBirth 19780208 -> 1978-02-08 に整形
+        var dob = self.user.birthdate
+        let insertIdx1 = dob.index(dob.startIndex, offsetBy: 6)
+        let insertIdx2 = dob.index(dob.startIndex, offsetBy: 4)
+        dob.insert(contentsOf: "-", at: insertIdx1)
+        dob.insert(contentsOf: "-", at: insertIdx2)
+        
+        let fileName = imageName()
+        var fileNameExt = "aaa"
+        if ResultHolder.GetInstance().GetMovieUrls() == ""{
+            fileNameExt = ".png"
+        }else{
+            fileNameExt = ".mp4"
+        }
+                
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let ssmixURL = URL(string: self.user.ssmixpath)!
+        let ssmixXmlURL = ssmixURL.appendingPathComponent(self.user.hashid+"_\(examDate1)_SUMAHO.xml")
+        let ssmixXmlURLPath = ssmixXmlURL.path
+        
+        //XMLファイルがあるかどうかを確認する
+        if FileManager.default.fileExists(atPath:ssmixXmlURLPath){
+            print("file exists")
+            guard let str = try? String(contentsOf: ssmixXmlURL) else {
+                fatalError("ファイル読み込みエラー")}
+            let result = str.range(of:"        </nsCORNEA:CORNEA>")
+            
+            if let theRange = result {
+                let latter = str[theRange.lowerBound...]
+                //print(latter)
+                let former = str.prefix(str.utf16.count - latter.utf16.count)
+                print(former)
+                
+                var i=1
+     
+                for i in 1...100 {
+                    var contain: Bool = former.contains("No=\"\(i)\"")
+                    if contain == true{
+                        print("\(i) is present")
+                    } else {
+                        print("\(i) is not present")
+                        var insert = """
+                            <nsCORNEA:List No=\"\(i)\">
+                                        <nsCORNEA:ImageType></nsCORNEA:ImageType>
+                                        <nsCORNEA:AcquisitionDate>\(examDate2)</nsCORNEA:AcquisitionDate>
+                                        <nsCORNEA:AcquisitionTime>\(examTime)</nsCORNEA:AcquisitionTime>
+                                        <nsCORNEA:Timer></nsCORNEA:Timer>
+                                        <nsCORNEA:HorizontalFieldOfView></nsCORNEA:HorizontalFieldOfView>
+                                        <nsCORNEA:ImageLaterality>\(side)</nsCORNEA:ImageLaterality>
+                                        <nsCORNEA:PixelSpacing unit="mm"></nsCORNEA:PixelSpacing>
+                                        <nsCORNEA:FileName>\(fileName).\(fileNameExt)</nsCORNEA:FileName>
+                                    </nsCORNEA:List>
+                        
+                        """
+                        var str = former + insert + latter
+                        //print(str)
+                        do {
+                             try str.write(to: ssmixXmlURL, atomically: true, encoding: .utf8)
+                             print("xml file successfully renewed!")
+                         } catch {
+                             print("Error: \(error)")
+                        }
+                        break
+                    }
+                }
+            }
+        } else {
+            //print("file does not exist")
+            let str = """
+                   <?xml version="1.0" encoding="UTF-8"?>
+                   <?xml-stylesheet type="text/xsl" href="Fundus_Stylesheet.xsl"?>
+                   
+                   <Ophthalmology xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nsCommon="http://www.joia.or.jp/standardized/namespaces/Common" xmlns:nsCORNEA="http://www.joia.or.jp/standardized/namespaces/Cornea" xsi:schemaLocation="http://www.joia.or.jp/standardized/namespaces/Common Common_schema.xsd
+                   http://www.joia.or.jp/standardized/namespaces/Fundus Fundus_schema.xsd">
+                   
+                        <nsCommon:Common>
+                            <nsCommon:Compnany>Apple</nsCommon:Compnany>
+                            <nsCommon:ModelName>iPhone13pro</nsCommon:ModelName>
+                            <nsCommon:MachineNo></nsCommon:MachineNo>
+                            <nsCommon:ROMVersion></nsCommon:ROMVersion>
+                            <nsCommon:Version></nsCommon:Version>
+                            <nsCommon:Date>\(examDate2)</nsCommon:Date>
+                            <nsCommon:Time>\(examTime)</nsCommon:Time>
+                   
+                            <nsCommon:Patient>
+                               <nsCommon:No.></nsCommon:No.>
+                               <nsCommon:ID>\(id)</nsCommon:ID>
+                               <nsCommon:FirstName></nsCommon:FirstName>
+                               <nsCommon:LastName></nsCommon:LastName>
+                               <nsCommon:Sex>\(gender)</nsCommon:Sex>
+                               <nsCommon:Age></nsCommon:Age>
+                               <nsCommon:DOB>\(dob)</nsCommon:DOB>
+                               <nsCommon:NameJ1></nsCommon:NameJ1>
+                               <nsCommon:NameJ2></nsCommon:NameJ2>
+                            </nsCommon:Patient>
+                            <nsCommon:Operator>
+                               <nsCommon:No.></nsCommon:No.>
+                               <nsCommon:ID></nsCommon:ID>
+                            </nsCommon:Operator>
+                        </nsCommon:Common>
+                   
+                        <nsTUMOR:Measure type="SUMAHO">
+                            <nsTUMOR:TUMOR>
+                                <nsTUMOR:List No="1">
+                                    <nsTUMOR:ImageType></nsTUMOR:ImageType>
+                                    <nsTUMOR:AcquisitionDate>\(examDate2)</nsTUMOR:AcquisitionDate>
+                                    <nsTUMOR:AcquisitionTime>\(examTime)</nsTUMOR:AcquisitionTime>
+                                    <nsTUMOR:Timer></nsTUMOR:Timer>
+                                    <nsTUMOR:HorizontalFieldOfView></nsTUMOR:HorizontalFieldOfView>
+                                    <nsTUMOR:ImageLaterality></nsTUMOR:ImageLaterality>
+                                    <nsTUMOR:PixelSpacing unit="mm"></nsTUMOR:PixelSpacing>
+                                    <nsTUMOR:FileName>\(fileName)\(fileNameExt)</nsTUMOR:FileName>
+                                </nsTUMOR:List>
+                            </nsTUMOR:TUMOR>
+                         </nsTUMOR:Measure>
+                   </Ophthalmology>
+                   """
+            do {
+                 try str.write(to: ssmixXmlURL, atomically: true, encoding: .utf8)
+                 print("xml file successfully created!")
+             } catch {
+                 print("Error: \(error)")
+             }
+        }
+     }
+    
+    
+    public func ssmix2Folder(){
+        //1回目のみフォルダを作成する。すでにフォルダがあればそこに追加保存する
+        if self.user.ssmixpath.isEmpty{
+            //document folderのパス
+            let dir = NSHomeDirectory() + "/Documents"
+            
+            //追加するフォルダの名前を定義
+            let id = self.user.hashid
+            //let id1 = self.user.hashid.prefix(3) //最初の3文字
+            //let id2 = self.user.hashid.dropFirst(3).prefix(3) //3から6文字目
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+            let examDate = dateFormatter.string(from: self.user.date)
+            
+            let dateFormatter2 = DateFormatter()
+            dateFormatter2.dateFormat = "yyyyMMddHHmmSSfff"
+            dateFormatter2.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter2.timeZone = TimeZone(identifier: "Asia/Tokyo")
+            let examDate2 = dateFormatter2.string(from: self.user.date)
+            let orderNum = examDate2.dropFirst(1) //2文字目から。yyyMMddHHmmSSfff
+            
+            let hospitalAbb = self.user.hospitalsAbbreviated[user.selected_hospital]
+            
+            let dataType = "SUMAHO"
+            let maker = "APL"
+            let deviceName = "000"
+            let keyInfo = self.user.hospitalcode[user.selected_hospital] + maker + String(deviceName) + String(orderNum)
+            let contentsFolder = id + "_" + examDate + "_" + dataType + "_" + keyInfo + "_" + examDate2 + "_26_1"
+            let folderPath = "\(dir)/\(hospitalAbb)/\(contentsFolder)"
+
+            print(folderPath)
+            
+            let fileManager = FileManager.default
+            do{
+                try fileManager.createDirectory(atPath: folderPath,  withIntermediateDirectories: true, attributes: nil)
+                self.user.ssmixpath = "file://"+folderPath //保存処理の際に使いやすいよう、フルパスに直して保存
+                
+                print(user.ssmixpath)
+            }catch {
+                print("フォルダ作成に失敗 error=(error)")
+            }
+        }else{
+            print("SSMIX folder already exists!")
+        }
+
+    }
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     func exportMovie(sourceURL: URL, destinationURL: URL, fileType: AVFileType) -> Void {

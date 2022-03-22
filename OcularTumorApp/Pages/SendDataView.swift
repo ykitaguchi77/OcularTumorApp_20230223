@@ -95,6 +95,7 @@ struct SendData: View {
                     ssmix2Folder() //保存用のフォルダを作成
                     createXml()
                     SaveToDoc()
+                    SaveToSsmix()
                     self.user.isSendData = true
                     self.user.imageNum += 1 //画像番号を増やす
                     self.presentationMode.wrappedValue.dismiss()
@@ -127,7 +128,7 @@ struct SendData: View {
         birthdate.insert("-", at: birthdate.index(birthdate.startIndex, offsetBy: 6))
         birthdate.insert("-", at: birthdate.index(birthdate.startIndex, offsetBy: 4))
 
-        let hospitalcode = self.user.hospitalcode[user.selected_gender]
+        let hospitalcode = self.user.hospitalcode[user.selected_hospital]
         let newid = id + gender + birthdate + hospitalcode
         let dateid = Data(newid.utf8)
         let hashid = SHA256.hash(data: dateid)
@@ -155,16 +156,10 @@ struct SendData: View {
     }
 
     
-    
-
-
-    //private func saveToDoc (image: UIImage, fileName: String ) -> Bool{
-    public func SaveToDoc () -> Bool{
+    public func SaveToSsmix () -> Bool{
         let images = ResultHolder.GetInstance().GetUIImages()
         let jsonfile = ResultHolder.GetInstance().GetAnswerJson()
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let photoURL = documentsURL.appendingPathComponent(imageName()+".png")
-        let movieURL = documentsURL.appendingPathComponent(imageName()+".mp4")
         let ssmixURL = URL(string: self.user.ssmixpath)!
         let ssmixPhotoURL = ssmixURL.appendingPathComponent(imageName()+".png")
         let ssmixMovieURL = ssmixURL.appendingPathComponent(imageName()+".mp4")
@@ -176,15 +171,6 @@ struct SendData: View {
                 let pngImageData = UIImage.pngData(images[i])
                 // jpgで保存する場合
                 // let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
-                do {
-                    try pngImageData()!.write(to: photoURL)
-                    print("successfully saved PNG to doc")
-                } catch {
-                    //エラー処理
-                    print("image save error")
-                    return false
-                }
-                
                 print("ssmixPhotoURL: \(ssmixPhotoURL)")
                 do {
                     try pngImageData()!.write(to: ssmixPhotoURL)
@@ -201,16 +187,46 @@ struct SendData: View {
             //mp4を保存
             let fileType: AVFileType = AVFileType.mp4
             // 動画をエクスポートする
-            exportMovie(sourceURL: URL(string:ResultHolder.GetInstance().GetMovieUrls())!, destinationURL: movieURL, fileType: fileType)
             exportMovie(sourceURL: URL(string:ResultHolder.GetInstance().GetMovieUrls())!, destinationURL: ssmixMovieURL, fileType: fileType)
         }
-            
+        return true
+    }
+
+
+    //private func saveToDoc (image: UIImage, fileName: String ) -> Bool{
+    public func SaveToDoc () -> Bool{
+        let images = ResultHolder.GetInstance().GetUIImages()
+        let jsonfile = ResultHolder.GetInstance().GetAnswerJson()
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let photoURL = documentsURL.appendingPathComponent(imageName()+".png")
+        let movieURL = documentsURL.appendingPathComponent(imageName()+".mp4")
+        
+        //動画が保存されていない場合
+        if ResultHolder.GetInstance().GetMovieUrls() == ""{
+            //pngを保存
+            for i in 0..<images.count{
+                let pngImageData = UIImage.pngData(images[i])
+                // jpgで保存する場合
+                // let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
+                do {
+                    try pngImageData()!.write(to: photoURL)
+                    print("successfully saved PNG to doc")
+                } catch {
+                    //エラー処理
+                    print("image save error")
+                    return false
+                }
+            }
+        }else{
+            //動画が保存されている場合
+            //mp4を保存
+            let fileType: AVFileType = AVFileType.mp4
+            // 動画をエクスポートする
+            exportMovie(sourceURL: URL(string:ResultHolder.GetInstance().GetMovieUrls())!, destinationURL: movieURL, fileType: fileType)
+        }
             
         //jsonを保存
         let jsonURL = documentsURL.appendingPathComponent(imageName()+".json")
-        let ssmixJsonURL = ssmixURL.appendingPathComponent(imageName()+".json")
-        
-        print("ssmixJsonURL: \(ssmixJsonURL)")
         do {
             try jsonfile.write(to: jsonURL, atomically: true, encoding: String.Encoding.utf8)
             print("successfully saved json to doc")

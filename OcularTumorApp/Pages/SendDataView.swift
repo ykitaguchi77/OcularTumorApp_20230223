@@ -307,7 +307,7 @@ struct SendData: View {
         
         let id = self.user.hashid
         let gender = self.user.genderCode[user.selected_gender]
-        let side = self.user.side[user.selected_side]
+        let side = self.user.sideCode[user.selected_side]
         //dateOfBirth 19780208 -> 1978-02-08 に整形
         var dob = self.user.birthdate
         let insertIdx1 = dob.index(dob.startIndex, offsetBy: 6)
@@ -358,7 +358,7 @@ struct SendData: View {
                                         <nsCORNEA:HorizontalFieldOfView></nsCORNEA:HorizontalFieldOfView>
                                         <nsCORNEA:ImageLaterality>\(side)</nsCORNEA:ImageLaterality>
                                         <nsCORNEA:PixelSpacing unit="mm"></nsCORNEA:PixelSpacing>
-                                        <nsCORNEA:FileName>\(fileName).\(fileNameExt)</nsCORNEA:FileName>
+                                        <nsCORNEA:FileName>\(fileName)\(fileNameExt)</nsCORNEA:FileName>
                                     </nsCORNEA:List>
                         
                         """
@@ -417,7 +417,7 @@ struct SendData: View {
                                     <nsTUMOR:AcquisitionTime>\(examTime)</nsTUMOR:AcquisitionTime>
                                     <nsTUMOR:Timer></nsTUMOR:Timer>
                                     <nsTUMOR:HorizontalFieldOfView></nsTUMOR:HorizontalFieldOfView>
-                                    <nsTUMOR:ImageLaterality></nsTUMOR:ImageLaterality>
+                                    <nsTUMOR:ImageLaterality>\(side)</nsTUMOR:ImageLaterality>
                                     <nsTUMOR:PixelSpacing unit="mm"></nsTUMOR:PixelSpacing>
                                     <nsTUMOR:FileName>\(fileName)\(fileNameExt)</nsTUMOR:FileName>
                                 </nsTUMOR:List>

@@ -236,6 +236,11 @@ class RectangleView: UIView {
             let width = frame.size.width
 
             context.addRect(CGRect(origin:CGPoint(x:0, y:0), size: CGSize(width:width, height:width)))
+            
+            //Elllipse
+            UIColor.blue.set()
+            context.addEllipse(in: CGRect(x:width*3/10, y:width*30/96, width:width*2/5, height:width*2/5))
+            
             context.strokePath()
         }
     }

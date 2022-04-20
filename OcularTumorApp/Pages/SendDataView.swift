@@ -333,7 +333,7 @@ struct SendData: View {
             print("file exists")
             guard let str = try? String(contentsOf: ssmixXmlURL) else {
                 fatalError("ファイル読み込みエラー")}
-            let result = str.range(of:"        </nsCORNEA:CORNEA>")
+            let result = str.range(of:"        </nsTUMOR:TUMOR>")
             
             if let theRange = result {
                 let latter = str[theRange.lowerBound...]
@@ -350,16 +350,16 @@ struct SendData: View {
                     } else {
                         print("\(i) is not present")
                         var insert = """
-                            <nsCORNEA:List No=\"\(i)\">
-                                        <nsCORNEA:ImageType></nsCORNEA:ImageType>
-                                        <nsCORNEA:AcquisitionDate>\(examDate2)</nsCORNEA:AcquisitionDate>
-                                        <nsCORNEA:AcquisitionTime>\(examTime)</nsCORNEA:AcquisitionTime>
-                                        <nsCORNEA:Timer></nsCORNEA:Timer>
-                                        <nsCORNEA:HorizontalFieldOfView></nsCORNEA:HorizontalFieldOfView>
-                                        <nsCORNEA:ImageLaterality>\(side)</nsCORNEA:ImageLaterality>
-                                        <nsCORNEA:PixelSpacing unit="mm"></nsCORNEA:PixelSpacing>
-                                        <nsCORNEA:FileName>\(fileName)\(fileNameExt)</nsCORNEA:FileName>
-                                    </nsCORNEA:List>
+                            <nsTUMOE:List No=\"\(i)\">
+                                        <nsTUMOR:ImageType></nsTUMOR:ImageType>
+                                        <nsTUMOR:AcquisitionDate>\(examDate2)</nsTUMOR:AcquisitionDate>
+                                        <nsTUMOR:AcquisitionTime>\(examTime)</nsTUMOR:AcquisitionTime>
+                                        <nsTUMOR:Timer></nsTUMOR:Timer>
+                                        <nsTUMOR:HorizontalFieldOfView></nsTUMOR:HorizontalFieldOfView>
+                                        <nsTUMOR:ImageLaterality>\(side)</nsTUMOR:ImageLaterality>
+                                        <nsTUMOR:PixelSpacing unit="mm"></nsTUMOR:PixelSpacing>
+                                        <nsTUMOR:FileName>\(fileName)\(fileNameExt)</nsTUMOR:FileName>
+                                    </nsTUMOR:List>
                         
                         """
                         var str = former + insert + latter

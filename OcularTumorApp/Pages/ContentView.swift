@@ -47,7 +47,7 @@ struct ContentView: View {
     
     
     var body: some View {
-        VStack(spacing:0){
+        VStack(alignment:.center, spacing:0){
             Text("Ocular tumor app")
                 .font(.largeTitle)
                 .padding(.bottom)
@@ -56,6 +56,9 @@ struct ContentView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 200)
+        }
+        
+        VStack(alignment:.leading, spacing:-10){
             
             Button(action: {
                 //病院番号はアプリを落としても保存されるようにしておく
@@ -78,7 +81,7 @@ struct ContentView: View {
                 //こう書いておかないとmissing as ancestorエラーが時々でる
             }
             
-            HStack{
+            HStack(spacing:-10){
                 Button(action: {
                     self.user.sourceType = UIImagePickerController.SourceType.camera
                     self.user.equipmentVideo = true
@@ -155,7 +158,7 @@ struct ContentView: View {
                 }
             }
             
-            HStack{
+            HStack(spacing:-10){
             Button(action: {
                 self.user.sourceType = UIImagePickerController.SourceType.photoLibrary
                 self.user.isSendData = false //撮影済みを解除
@@ -204,6 +207,21 @@ struct ContentView: View {
                 .frame(minWidth:0, maxWidth:200, minHeight: 75)
                 .background(Color.black)
                 .padding()
+            }
+            
+            Button(action: {self.goSendData = true /*またはself.show.toggle() */}) {
+                HStack{
+                    Image(systemName: "magnifyingglass")
+                    Text("検索")
+                }
+                    .foregroundColor(Color.white)
+                    .font(Font.largeTitle)
+            }
+                .frame(minWidth:0, maxWidth:160, minHeight: 75)
+                .background(Color.black)
+                .padding()
+            .sheet(isPresented: self.$goSendData) {
+                SendData(user: user)
             }
         }
     }

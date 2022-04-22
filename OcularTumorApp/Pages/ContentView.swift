@@ -42,8 +42,9 @@ struct ContentView: View {
     @State private var goTakePhoto: Bool = false  //撮影ボタン
     @State private var isPatientInfo: Bool = false  //患者情報入力ボタン
     @State private var goSendData: Bool = false  //送信ボタン
-    @State private var uploadData: Bool = false  //送信ボタン
-    @State private var newPatient: Bool = false  //送信ボタン
+    @State private var uploadData: Bool = false  //アップロードボタン
+    @State private var newPatient: Bool = false  //新規患者ボタン
+    @State private var goSearch: Bool = false  //検索ボタン
     
     
     var body: some View {
@@ -209,7 +210,7 @@ struct ContentView: View {
                 .padding()
             }
             
-            Button(action: {self.goSendData = true /*またはself.show.toggle() */}) {
+            Button(action: {self.goSearch = true /*またはself.show.toggle() */}) {
                 HStack{
                     Image(systemName: "magnifyingglass")
                     Text("検索")
@@ -220,8 +221,8 @@ struct ContentView: View {
                 .frame(minWidth:0, maxWidth:160, minHeight: 75)
                 .background(Color.black)
                 .padding()
-            .sheet(isPresented: self.$goSendData) {
-                SendData(user: user)
+            .sheet(isPresented: self.$goSearch) {
+                Search(user: user)
             }
         }
     }

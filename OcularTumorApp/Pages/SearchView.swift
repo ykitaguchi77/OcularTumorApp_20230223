@@ -15,11 +15,11 @@ import Foundation
 struct Search: View {
     @ObservedObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State private var items =  [String]()
+    @State private var items =  SearchModel.GetInstance().getJson()
     
     var body: some View {
         Button(action: {
-            items = getFolder()
+            items = SearchModel.GetInstance().getJson()
             }) {
             HStack{
                 Image(systemName: "info.circle")
@@ -32,24 +32,83 @@ struct Search: View {
             .background(Color.black)
             .padding()
             .navigationTitle("フォルダ検索")
+        
+        List(0..<items.count) {(row: Int) in
+            Text("\(items[row])")
+                .listRowBackground(Color.gray)
+        }
     }
 }
 
-func getFolder() -> [String] {
-    //ドキュメントフォルダ内のファイル内容を書き出し
-    let documentsURL = NSHomeDirectory() + "/Documents"
-    guard let fileNames = try? FileManager.default.contentsOfDirectory(atPath: documentsURL) else {
-        print("no files")
-        return []
-    }
-     
-    //ファイル内容を1つずつ展開してJsonのリストにする
-    var contents = [String]()
-    for fileName in fileNames {
-        try? contents.append(String(contentsOfFile: documentsURL + "/" + fileName, encoding: .utf8))
+
+
+class SearchModel: ObservableObject, Identifiable {
+    
+    init() {}
+    
+    static var instance: SearchModel?
+    public static func GetInstance() -> SearchModel{
+        if (instance == nil) {
+            instance = SearchModel()
+        }
+        
+        return instance!
     }
     
-    //String形式をdata形式に格納
+    public func getJson()->[String] {
+        //ドキュメントフォルダ内のファイル内容を書き出し
+        let documentsURL = NSHomeDirectory() + "/Documents"
+        guard let fileNames = try? FileManager.default.contentsOfDirectory(atPath: documentsURL) else {
+            print("no files")
+            return []
+        }
+         
+        //ファイル内容を1つずつ展開してJsonのリストにする
+        var contents = [String]()
+        var objList = [String]()
+        for fileName in fileNames {
+            try? contents.append(String(contentsOfFile: documentsURL + "/" + fileName, encoding: .utf8))
+        }
+        for num in (0 ..< contents.count) {
+
+            let contentData = contents[num].data(using: .utf8)!
+            
+            print("***** JSONデータ確認 *****")
+            print(String(bytes: contentData, encoding: .utf8)!)
+          
+            let decoder = JSONDecoder()
+            guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
+                fatalError("Failed to decode from JSON.")
+            }
+            objList.append(jsonData.pq2)
+        }
+    print("***** 最終データ確認 *****")
+    print(objList)
+    return objList
+    }
+}
+
+
+
+
+
+
+//func getFolder() -> [String] {
+//    //ドキュメントフォルダ内のファイル内容を書き出し
+//    let documentsURL = NSHomeDirectory() + "/Documents"
+//    guard let fileNames = try? FileManager.default.contentsOfDirectory(atPath: documentsURL) else {
+//        print("no files")
+//        return []
+//    }
+//
+//    //ファイル内容を1つずつ展開してJsonのリストにする
+//    var contents = [String]()
+//    for fileName in fileNames {
+//        try? contents.append(String(contentsOfFile: documentsURL + "/" + fileName, encoding: .utf8))
+//    }
+    
+////////////////////////////////////
+//    String形式をdata形式に格納
 //    let contentData = contents[0].data(using: .utf8)!
 //
 //    print("***** JSONデータ確認 *****")
@@ -61,25 +120,25 @@ func getFolder() -> [String] {
 //    }
 //    print("***** 最終データ確認 *****")
 //    print(jsonData.pq1)
+//////////////////////////////////////////
+    
+//    for num in (0 ..< contents.count) {
 //
-    
-    for num in (0 ..< contents.count) {
-
-        let contentData = contents[num].data(using: .utf8)!
-        
-        print("***** JSONデータ確認 *****")
-        print(String(bytes: contentData, encoding: .utf8)!)
-      
-        let decoder = JSONDecoder()
-        guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
-            fatalError("Failed to decode from JSON.")
-        }
-        print("***** 最終データ確認 *****")
-        print(jsonData.pq1)
-    }
-    
-    return ["aaa"]
-}
+//        let contentData = contents[num].data(using: .utf8)!
+//
+//        print("***** JSONデータ確認 *****")
+//        print(String(bytes: contentData, encoding: .utf8)!)
+//
+//        let decoder = JSONDecoder()
+//        guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
+//            fatalError("Failed to decode from JSON.")
+//        }
+//        print("***** 最終データ確認 *****")
+//        print(jsonData.pq1)
+//    }
+//
+//    return ["aaa"]
+//}
 
 
 struct JsonData:Codable {  // - Codable に conform

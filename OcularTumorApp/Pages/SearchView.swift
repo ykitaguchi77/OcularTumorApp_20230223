@@ -5,129 +5,95 @@
 //
 //  Created by Yoshiyuki Kitaguchi on 2021/04/18.
 //
+//https://capibara1969.com/3447/
+//http://harumi.sakura.ne.jp/wordpress/2019/07/30/document%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B%E9%9A%9B%E3%81%AE%E7%BD%A0/
+
 import SwiftUI
+import Foundation
 
 //変数を定義
 struct Search: View {
     @ObservedObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var isSaved = false
-    @State private var goTakePhoto: Bool = false  //撮影ボタン
-    @State private var temp = "" //スキャン結果格納用の変数
-
+    @State private var items =  [String]()
     
     var body: some View {
-        NavigationView{
-                Form{
-                    HStack{
-                        Text("入力日時")
-                        Text(self.user.date, style: .date)
-                    }
-                    
-                    
-                    Picker(selection: $user.selected_hospital,
-                               label: Text("施設")) {
-                        ForEach(0..<user.hospitals.count) {
-                            Text(self.user.hospitals[$0])
-                                 }
-                        }
-                       .onChange(of: user.selected_hospital) {_ in
-                           self.user.isSendData = false
-                           UserDefaults.standard.set(user.selected_hospital, forKey:"hospitaldefault")
-                       }
-                    
-                    //DatePicker("入力日時", selection: $user.date)
-                    
-                    HStack {
-                        Text("I D ")
-                        TextField("idを入力してください", text: $user.id)
-                        .keyboardType(.numbersAndPunctuation)
-                        .onChange(of: user.id) { _ in
-                            self.user.isSendData = false
-                            }
-                        ScanButton(text: $user.id)
-                        .frame(width: 100, height: 30, alignment: .leading)
-                    }
-                        
-                    
-                    HStack{
-                        Text("生年月日")
-                        TextField("1970年3月8日 →19700308と入力", text: $user.birthdate)
-                            .keyboardType(.numbersAndPunctuation)
-                    }.layoutPriority(1)
-                    .onChange(of: user.birthdate) { _ in
-                    self.user.isSendData = false
-                    }
-
-                    
-                    HStack{
-                        Text("性別")
-                        Picker(selection: $user.selected_gender,
-                                   label: Text("性別")) {
-                            ForEach(0..<user.gender.count) {
-                                Text(self.user.gender[$0])
-                                    }
-                            }
-                            .onChange(of: user.selected_gender) {_ in
-                                self.user.isSendData = false
-                                }
-                            .pickerStyle(SegmentedPickerStyle())
-                    }
-                    
-                    
-                    HStack{
-                        Text("Side")
-                        Picker(selection: $user.selected_side,
-                                   label: Text("右or左")) {
-                            ForEach(0..<user.side.count) {
-                                Text(self.user.side[$0])
-                                    }
-                            }
-                            .onChange(of: user.selected_side) {_ in
-                                self.user.isSendData = false
-                                }
-                            .pickerStyle(SegmentedPickerStyle())
-                    }
-                    
-                    Picker(selection: $user.selected_disease,
-                               label: Text("疾患")) {
-                        ForEach(0..<user.disease.count) {
-                            Text(self.user.disease[$0])
-                                }
-                        }
-                       .onChange(of: user.selected_disease) { _ in
-                           self.user.isSendData = false
-                           }
-                    
-                    HStack{
-                        Text("自由記載欄")
-                        TextField("", text: $user.free_disease)
-                            .keyboardType(.default)
-                    }.layoutPriority(1)
-                    .onChange(of: user.free_disease) { _ in
-                    self.user.isSendData = false
-                    }
-                }.navigationTitle("患者情報入力")
-                .onAppear(){
-                 }
+        Button(action: {
+            items = getFolder()
+            }) {
+            HStack{
+                Image(systemName: "info.circle")
+                Text("患者情報入力")
             }
-                
-            
-            Spacer()
-            Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-               }
-                
-            ) {
-                Text("保存")
-                    .foregroundColor(Color.white)
-                    .font(Font.largeTitle)
+                .foregroundColor(Color.white)
+                .font(Font.largeTitle)
             }
-                .frame(minWidth:0, maxWidth:CGFloat.infinity, minHeight: 75)
-                .background(Color.black)
-                .padding()
-                .sheet(isPresented: self.$goTakePhoto) {
-                    CameraPage(user: user)
-                }
+            .frame(minWidth:0, maxWidth:CGFloat.infinity, minHeight: 75)
+            .background(Color.black)
+            .padding()
+            .navigationTitle("フォルダ検索")
     }
 }
+
+func getFolder() -> [String] {
+    //ドキュメントフォルダ内のファイル内容を書き出し
+    let documentsURL = NSHomeDirectory() + "/Documents"
+    guard let fileNames = try? FileManager.default.contentsOfDirectory(atPath: documentsURL) else {
+        print("no files")
+        return []
+    }
+     
+    //ファイル内容を1つずつ展開してJsonのリストにする
+    var contents = [String]()
+    for fileName in fileNames {
+        try? contents.append(String(contentsOfFile: documentsURL + "/" + fileName, encoding: .utf8))
+    }
+    
+    //String形式をdata形式に格納
+//    let contentData = contents[0].data(using: .utf8)!
+//
+//    print("***** JSONデータ確認 *****")
+//    print(String(bytes: contentData, encoding: .utf8)!)
+//
+//    let decoder = JSONDecoder()
+//    guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
+//        fatalError("Failed to decode from JSON.")
+//    }
+//    print("***** 最終データ確認 *****")
+//    print(jsonData.pq1)
+//
+    
+    for num in (0 ..< contents.count) {
+
+        let contentData = contents[num].data(using: .utf8)!
+        
+        print("***** JSONデータ確認 *****")
+        print(String(bytes: contentData, encoding: .utf8)!)
+      
+        let decoder = JSONDecoder()
+        guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
+            fatalError("Failed to decode from JSON.")
+        }
+        print("***** 最終データ確認 *****")
+        print(jsonData.pq1)
+    }
+    
+    return ["aaa"]
+}
+
+
+struct JsonData:Codable {  // - Codable に conform
+    var pq1: String
+    var pq2: String
+    var pq3: String
+    var pq4: String
+    var pq5: String
+    var pq6: String
+    var pq7: String
+    var pq8: String
+    var pq9: String
+    var pq10: String
+}
+
+
+

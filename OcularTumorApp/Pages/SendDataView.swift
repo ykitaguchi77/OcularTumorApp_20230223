@@ -200,7 +200,7 @@ struct SendData: View {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let photoURL = documentsURL.appendingPathComponent(imageName()+".png")
         let movieURL = documentsURL.appendingPathComponent(imageName()+".mp4")
-        
+                
         //動画が保存されていない場合
         if ResultHolder.GetInstance().GetMovieUrls() == ""{
             //pngを保存

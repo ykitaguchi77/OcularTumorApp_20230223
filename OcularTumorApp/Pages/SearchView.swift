@@ -63,12 +63,15 @@ class SearchModel: ObservableObject, Identifiable {
             return []
         }
          
-        //ファイル内容を1つずつ展開してJsonのリストにする
+        //ファイル内容を1つずつ展開してリストにする
         var contents = [String]()
         var objList = [String]()
+        var temp = [String]()
         for fileName in fileNames {
             try? contents.append(String(contentsOfFile: documentsURL + "/" + fileName, encoding: .utf8))
         }
+        
+        //リストを1つずつJson形式にして、その一部をリストの形に戻す
         for num in (0 ..< contents.count) {
 
             let contentData = contents[num].data(using: .utf8)!
@@ -80,7 +83,7 @@ class SearchModel: ObservableObject, Identifiable {
             guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
                 fatalError("Failed to decode from JSON.")
             }
-            objList.append(jsonData.pq2)
+            objList.append(contentsOf: [jsonData.pq1, jsonData.pq2]) //複数項目をappendするときはcontentsOfを用いる
         }
     print("***** 最終データ確認 *****")
     print(objList)

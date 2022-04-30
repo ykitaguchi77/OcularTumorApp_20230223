@@ -20,6 +20,7 @@ struct Search: View {
     var body: some View {
         Button(action: {
             items = SearchModel.GetInstance().getJson()
+            print(items.dateList)
             }) {
             HStack{
                 Image(systemName: "info.circle")
@@ -33,10 +34,10 @@ struct Search: View {
             .padding()
             .navigationTitle("フォルダ検索")
         
-        List(0..<items.count) {(row: Int) in
-            Text("\(items[row])")
-                .listRowBackground(Color.gray)
-        }
+//        List(0..<items.count) {(row: Int) in
+//            Text("\(items[row])")
+//                .listRowBackground(Color.gray)
+//        }
     }
 }
 
@@ -55,17 +56,21 @@ class SearchModel: ObservableObject, Identifiable {
         return instance!
     }
     
-    public func getJson()->[String] {
+    public func getJson()->(dateList: [String], hashList: [String], idList: [String], imgNumList: [String], sideList: [String]) {
         //ドキュメントフォルダ内のファイル内容を書き出し
         let documentsURL = NSHomeDirectory() + "/Documents"
         guard let fileNames = try? FileManager.default.contentsOfDirectory(atPath: documentsURL) else {
             print("no files")
-            return []
+            return ([], [], [], [], [])
         }
          
         //ファイル内容を1つずつ展開してリストにする
         var contents = [String]()
-        var objList = [String]()
+        var dateList = [String]()
+        var hashList = [String]()
+        var idList = [String]()
+        var imgNumList = [String]()
+        var sideList = [String]()
         var temp = [String]()
         for fileName in fileNames {
             try? contents.append(String(contentsOfFile: documentsURL + "/" + fileName, encoding: .utf8))
@@ -75,19 +80,30 @@ class SearchModel: ObservableObject, Identifiable {
         for num in (0 ..< contents.count) {
 
             let contentData = contents[num].data(using: .utf8)!
+            var appendStr: String = ""
             
-            print("***** JSONデータ確認 *****")
-            print(String(bytes: contentData, encoding: .utf8)!)
+//            print("***** JSONデータ確認 *****")
+//            print(String(bytes: contentData, encoding: .utf8)!)
           
             let decoder = JSONDecoder()
             guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
                 fatalError("Failed to decode from JSON.")
             }
-            objList.append(contentsOf: [jsonData.pq1, jsonData.pq2]) //複数項目をappendするときはcontentsOfを用いる
+            
+            
+            dateList.append(jsonData.pq1)
+            hashList.append(jsonData.pq2) //複数項目をappendするときはcontentsOfを用いる
+            idList.append(jsonData.pq3)
+            imgNumList.append(jsonData.pq4)
+            sideList.append(jsonData.pq5)
         }
-    print("***** 最終データ確認 *****")
-    print(objList)
-    return objList
+//    print("***** 最終データ確認 *****")
+//    print(dateList)
+//    print(hashList)
+//    print(idList)
+//    print(imgNumList)
+//    print(sideList)
+    return (dateList, hashList, idList, imgNumList, sideList)
     }
 }
 

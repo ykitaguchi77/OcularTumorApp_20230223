@@ -20,7 +20,8 @@ struct Search: View {
     var body: some View {
         Button(action: {
             items = SearchModel.GetInstance().getJson()
-            print(items.dateList)
+//            print(items.dateList)
+            print(items)
             }) {
             HStack{
                 Image(systemName: "info.circle")
@@ -34,10 +35,11 @@ struct Search: View {
             .padding()
             .navigationTitle("フォルダ検索")
         
-//        List(0..<items.count) {(row: Int) in
-//            Text("\(items[row])")
-//                .listRowBackground(Color.gray)
-//        }
+        ForEach(items.dateList, id: \.self){dest in
+            Text(dest)
+            
+            
+        }
     }
 }
 

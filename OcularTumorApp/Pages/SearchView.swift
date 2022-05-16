@@ -39,9 +39,9 @@ struct Search: View {
                     .padding()
                     .navigationTitle("フォルダ検索")
                 List{
-                    ForEach(0 ..< items.pq1List.count, id: \.self){idx in
+                    ForEach(0 ..< items.count, id: \.self){idx in
                         HStack{
-                            Text("date: \(items.pq1List[idx]), id: \(items.pq3List[idx])-\(items.pq4List[idx]), side: \(items.pq5List[idx]), disease: \(items.pq7List[idx])")
+                            Text("qaaa")
                                 
                             Spacer()
                             Text("Load")
@@ -74,26 +74,17 @@ class SearchModel: ObservableObject, Identifiable {
         return instance!
     }
 
-    public func getJson()->(pq1List: [String], pq2List: [String], pq3List: [String], pq4List: [String], pq5List: [String], pq6List: [String],pq7List: [String], pq8List: [String], pq9List: [String], pq10List: [String]) {
+    public func getJson() -> [QuestionAnswerData] {
         //ドキュメントフォルダ内のファイル内容を書き出し
         let documentsURL = NSHomeDirectory() + "/Documents"
         guard let fileNames = try? FileManager.default.contentsOfDirectory(atPath: documentsURL) else {
             print("no files")
-            return ([], [], [], [], [], [], [], [], [], [])
+            return [QuestionAnswerData]() //ファイルが無い場合は空の構造体を返す
         }
 
         //ファイル内容を1つずつ展開してリストにする
         var contents = [String]()
-        var pq1List = [String]()
-        var pq2List = [String]()
-        var pq3List = [String]()
-        var pq4List = [String]()
-        var pq5List = [String]()
-        var pq6List = [String]()
-        var pq7List = [String]()
-        var pq8List = [String]()
-        var pq9List = [String]()
-        var pq10List = [String]()
+        var JsonList = [QuestionAnswerData]() //QuestionAnswerDataの構造体定義はResultHolderにある
 
         for fileName in fileNames {
             try? contents.append(String(contentsOfFile: documentsURL + "/" + fileName, encoding: .utf8))
@@ -112,17 +103,8 @@ class SearchModel: ObservableObject, Identifiable {
             guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
                 fatalError("Failed to decode from JSON.")
             }
-
-            pq1List.append(jsonData.pq1)
-            pq2List.append(jsonData.pq2)
-            pq3List.append(jsonData.pq3)
-            pq4List.append(jsonData.pq4)
-            pq5List.append(jsonData.pq5)
-            pq6List.append(jsonData.pq6)
-            pq7List.append(jsonData.pq7)
-            pq8List.append(jsonData.pq8)
-            pq9List.append(jsonData.pq9)
-            pq10List.append(jsonData.pq10)
+            
+            JsonList.append(jsonData)
         }
 //    print("***** 最終データ確認 *****")
 //    print(dateList)
@@ -130,23 +112,23 @@ class SearchModel: ObservableObject, Identifiable {
 //    print(idList)
 //    print(imgNumList)
 //    print(sideList)
-    return (pq1List, pq2List, pq3List, pq4List, pq5List, pq6List, pq7List, pq8List, pq9List, pq10List)
+    return (JsonList)
     }
 }
 
 
-struct JsonData:Codable {  // - Codable に conform
-    var pq1: String //date
-    var pq2: String //hash
-    var pq3: String //id
-    var pq4: String //imgNum
-    var pq5: String //side
-    var pq6: String //hospital
-    var pq7: String //disease
-    var pq8: String //free
-    var pq9: String //sex
-    var pq10: String //birthdate
-}
+//struct JsonData:Codable {  // - Codable に conform
+//    var pq1: String //date
+//    var pq2: String //hash
+//    var pq3: String //id
+//    var pq4: String //imgNum
+//    var pq5: String //side
+//    var pq6: String //hospital
+//    var pq7: String //disease
+//    var pq8: String //free
+//    var pq9: String //sex
+//    var pq10: String //birthdate
+//}
 
 
 

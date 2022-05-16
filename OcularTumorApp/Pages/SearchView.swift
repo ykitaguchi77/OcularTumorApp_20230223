@@ -16,7 +16,6 @@ struct Search: View {
     @ObservedObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showingAlert = false
-    @State private var isPatientInfo = false
     @State private var orderOfDate = true //trueなら日付順、falseならID順
     @State private var items =  SearchModel.GetInstance().getJson()
 
@@ -94,7 +93,7 @@ struct Search: View {
                                         user.selected_gender = user.gender.firstIndex(where: { $0 == items[idx].pq9})!
                                         user.birthdate = items[idx].pq10
                                         LoadImages(name: imageName()) //imageNameはJOIR準拠の命名。画像をresultHolderに格納。
-                                        self.isPatientInfo.toggle()
+                                        self.user.isSendData = false //撮影済みを解除
                                         self.presentationMode.wrappedValue.dismiss()
                                     }),
                                           secondaryButton:.destructive(Text("いいえ"), action:{}))

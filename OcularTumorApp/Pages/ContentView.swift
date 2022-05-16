@@ -168,7 +168,7 @@ struct ContentView: View {
             }) {
                 HStack{
                     Image(systemName: "folder")
-                    Text("Load")
+                    Text("Up")
                 }
                     .foregroundColor(Color.white)
                     .font(Font.largeTitle)
@@ -212,8 +212,8 @@ struct ContentView: View {
             
             Button(action: {self.goSearch = true /*またはself.show.toggle() */}) {
                 HStack{
-                    Image(systemName: "magnifyingglass")
-                    Text("検索")
+                    Image(systemName: "applepencil")
+                    Text("修正")
                 }
                     .foregroundColor(Color.white)
                     .font(Font.largeTitle)

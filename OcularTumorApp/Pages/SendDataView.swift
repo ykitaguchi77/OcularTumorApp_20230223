@@ -434,7 +434,6 @@ struct SendData: View {
         }
      }
     
-    
     public func ssmix2Folder(){
         //1回目のみフォルダを作成する。すでにフォルダがあればそこに追加保存する
         if self.user.ssmixpath.isEmpty{
@@ -484,22 +483,6 @@ struct SendData: View {
         }
 
     }
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func exportMovie(sourceURL: URL, destinationURL: URL, fileType: AVFileType) -> Void {
 
@@ -550,6 +533,15 @@ struct SendData: View {
 
     
 }
+
+
+
+
+
+
+
+
+
 
 
 //ビデオ再生ビュー

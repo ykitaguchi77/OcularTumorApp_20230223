@@ -15,28 +15,49 @@ import Foundation
 struct Search: View {
     @ObservedObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var showingAlert = false
+    @State private var isPatientInfo = false
+    @State private var orderOfDate = true //trueなら日付順、falseならID順
     @State private var items =  SearchModel.GetInstance().getJson()
+
     
     var body: some View {
         
         GeometryReader { bodyView in
             VStack{
-        
-                Button(action: {
-                    items = SearchModel.GetInstance().getJson()
-                    print(items[0].pq1)
+    
+                HStack(spacing:-10){
+                    Button(action: {
+                        items.sort(by: {a, b -> Bool in return a.pq3 < b.pq3}) //日付を昇順に並べ替え
+                        items.sort(by: {a, b -> Bool in return a.pq1 < b.pq1}) //IDを昇順に並べ替え
                     }) {
-                    HStack{
-                        Image(systemName: "arrow.up.arrow.down")
-                        Text("並べ替え")
+                        HStack{
+                            Image(systemName: "arrow.up.arrow.down")
+                            Text("日付順")
+                        }
+                            .foregroundColor(Color.white)
+                            .font(Font.largeTitle)
                     }
-                        .foregroundColor(Color.white)
-                        .font(Font.largeTitle)
+                        .frame(minWidth:0, maxWidth:CGFloat.infinity, minHeight: 75)
+                        .background(Color.black)
+                        .padding()
+                    
+                    Button(action: {
+                        items.sort(by: {a, b -> Bool in return a.pq1 < b.pq1}) //IDを昇順に並べ替え
+                        items.sort(by: {a, b -> Bool in return a.pq3 < b.pq3}) //日付を昇順に並べ替え
+                    }) {
+                        HStack{
+                            Image(systemName: "arrow.up.arrow.down")
+                            Text("ID順")
+                        }
+                            .foregroundColor(Color.white)
+                            .font(Font.largeTitle)
                     }
-                    .frame(minWidth:0, maxWidth:CGFloat.infinity, minHeight: 75)
-                    .background(Color.black)
-                    .padding()
-                    .navigationTitle("フォルダ検索")
+                        .frame(minWidth:0, maxWidth:CGFloat.infinity, minHeight: 75)
+                        .background(Color.black)
+                        .padding()
+                }
+                    
                 List{
                     ForEach(0 ..< items.count, id: \.self){idx in
                         HStack{
@@ -47,34 +68,95 @@ struct Search: View {
                             }
                                 
                             Spacer()
-                            Text("Load")
+                            Text("Load")  //Loadボタン
                                 .onTapGesture {
-                                    //形式を直してobservable objectに格納する
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyyMMdd"
-                                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                                    dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-                                    let date = dateFormatter.date(from: items[idx].pq1)
-                                    user.date = date!
-                                    user.hashid = items[idx].pq2
-                                    user.id = items[idx].pq3
-                                    user.imageNum = Int(items[idx].pq4)!
-                                    user.selected_side = user.side.firstIndex(where: { $0 == items[idx].pq5})!
-                                    user.selected_hospital = user.hospitals.firstIndex(where: { $0 == items[idx].pq6})!
-                                    user.selected_disease = user.disease.firstIndex(where: { $0 == items[idx].pq7})!
-                                    user.free_disease = items[idx].pq8
-                                    user.selected_gender = user.gender.firstIndex(where: { $0 == items[idx].pq9})!
-                                    user.birthdate = items[idx].pq10
-                                    print("\(idx)行目のButtonをタップ")
+                                    self.showingAlert.toggle()
                                 }
                                 .frame(minWidth:0, maxWidth:bodyView.size.width/4, minHeight: 40)
                                 .foregroundColor(Color.white)
                                 .background(Color.black)
+                                .alert(isPresented:$showingAlert){
+                                    Alert(title: Text("データをロードしますか？"), primaryButton:.default(Text("はい"),action:{
+                                        //形式を直してobservable objectに格納する
+                                        let dateFormatter = DateFormatter()
+                                        dateFormatter.dateFormat = "yyyyMMdd"
+                                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                                        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+                                        let date = dateFormatter.date(from: items[idx].pq1)
+                                        user.date = date!
+                                        user.hashid = items[idx].pq2
+                                        user.id = items[idx].pq3
+                                        user.imageNum = Int(items[idx].pq4)!
+                                        user.selected_side = user.side.firstIndex(where: { $0 == items[idx].pq5})!
+                                        user.selected_hospital = user.hospitals.firstIndex(where: { $0 == items[idx].pq6})!
+                                        user.selected_disease = user.disease.firstIndex(where: { $0 == items[idx].pq7})!
+                                        user.free_disease = items[idx].pq8
+                                        user.selected_gender = user.gender.firstIndex(where: { $0 == items[idx].pq9})!
+                                        user.birthdate = items[idx].pq10
+                                        LoadImages(name: imageName()) //imageNameはJOIR準拠の命名。画像をresultHolderに格納。
+                                        self.isPatientInfo.toggle()
+                                        self.presentationMode.wrappedValue.dismiss()
+                                    }),
+                                          secondaryButton:.destructive(Text("いいえ"), action:{}))
+                                    }
                         }
                     }
                 }
             }
         }
+    }
+    
+    //hashIDと同じ名前のImageをロードして、ResultHolderに格納
+    public func LoadImages(name: String){
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        var imagePath = documentsURL.appendingPathComponent(name+".png")
+        var moviePath = documentsURL.appendingPathComponent(name+".mp4")
+        
+        //同名の画像があるかどうか
+        let imgExists = FileManager().fileExists(atPath: imagePath.path)
+        if imgExists == true{
+            //.pathプロパティを引数に画像読み込み
+            let image = UIImage(contentsOfFile: imagePath.path)
+
+            let cgImage = image?.cgImage //CGImageに変換
+            let cropped = cgImage!.cropToSquare()
+
+            let rawImage = UIImage(cgImage: cropped)
+            ResultHolder.GetInstance().SetImage(index: 0, cgImage: rawImage.cgImage!)
+            ResultHolder.GetInstance().SetMovieUrls(Url: "")
+            print("image loaded")
+        }
+        
+        let movieExists = FileManager().fileExists(atPath: moviePath.path)
+        if movieExists == true{
+            // get a URL for the selected local file with nil safety
+
+            let tempDirectory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
+            let croppedMovieFileURL: URL = tempDirectory.appendingPathComponent("mytemp2.mov")
+            
+            MovieCropper.exportSquareMovie(sourceURL: moviePath, destinationURL: croppedMovieFileURL, fileType: .mov, completion: {
+                // 正方形にクロッピングされた動画をフォトライブラリに保存
+            })
+            //ResultHolderに保存
+            ResultHolder.GetInstance().SetMovieUrls(Url: croppedMovieFileURL.absoluteString)
+            print("movie loaded")
+        }
+    }
+    
+    //JOIRの画像命名（SendDataViewにも同じものがある）
+    public func imageName() -> String{
+        let id = self.user.hashid
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        let examDate = dateFormatter.string(from: self.user.date)
+        let kind = "SUMAHO"
+        let side = self.user.sideCode[user.selected_side]
+        let imageNum = String(format: "%03d", self.user.imageNum)
+        let imageName = id + "_" + examDate + "_" + kind + "_" + side + "_" + imageNum
+        //print(imageName)
+        return imageName
     }
 }
 
@@ -121,14 +203,10 @@ class SearchModel: ObservableObject, Identifiable {
             
             JsonList.append(jsonData)
         }
-        
         JsonList.sort(by: {a, b -> Bool in return a.pq3 < b.pq3}) //日付を昇順に並べ替え
-        JsonList.sort(by: {a, b -> Bool in return a.pq1 < b.pq1}) //日付を昇順に並べ替え
-
+        JsonList.sort(by: {a, b -> Bool in return a.pq1 < b.pq1}) //IDを昇順に並べ替え
     return (JsonList)
     }
-    
-    
 }
 
 

@@ -24,12 +24,11 @@ struct Search: View {
         
                 Button(action: {
                     items = SearchModel.GetInstance().getJson()
-        //            print(items.dateList)
-        //            print(items)
+                    print(items[0].pq1)
                     }) {
                     HStack{
-                        Image(systemName: "info.circle")
-                        Text("患者情報入力")
+                        Image(systemName: "arrow.up.arrow.down")
+                        Text("並べ替え")
                     }
                         .foregroundColor(Color.white)
                         .font(Font.largeTitle)
@@ -41,11 +40,31 @@ struct Search: View {
                 List{
                     ForEach(0 ..< items.count, id: \.self){idx in
                         HStack{
-                            Text("qaaa")
+                            VStack{
+                                Text("date: \(items[idx].pq1)").frame(maxWidth: .infinity,alignment: .leading)
+                                Text("id: \(items[idx].pq3), num: \(items[idx].pq4)").frame(maxWidth: .infinity,alignment: .leading)
+                                Text("side: \(items[idx].pq5), disease: \(items[idx].pq7), \(items[idx].pq8)").frame(maxWidth: .infinity,alignment: .leading)
+                            }
                                 
                             Spacer()
                             Text("Load")
                                 .onTapGesture {
+                                    //形式を直してobservable objectに格納する
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyyMMdd"
+                                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                                    dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+                                    let date = dateFormatter.date(from: items[idx].pq1)
+                                    user.date = date!
+                                    user.hashid = items[idx].pq2
+                                    user.id = items[idx].pq3
+                                    user.imageNum = Int(items[idx].pq4)!
+                                    user.selected_side = user.side.firstIndex(where: { $0 == items[idx].pq5})!
+                                    user.selected_hospital = user.hospitals.firstIndex(where: { $0 == items[idx].pq6})!
+                                    user.selected_disease = user.disease.firstIndex(where: { $0 == items[idx].pq7})!
+                                    user.free_disease = items[idx].pq8
+                                    user.selected_gender = user.gender.firstIndex(where: { $0 == items[idx].pq9})!
+                                    user.birthdate = items[idx].pq10
                                     print("\(idx)行目のButtonをタップ")
                                 }
                                 .frame(minWidth:0, maxWidth:bodyView.size.width/4, minHeight: 40)
@@ -94,10 +113,6 @@ class SearchModel: ObservableObject, Identifiable {
         for num in (0 ..< contents.count) {
 
             let contentData = contents[num].data(using: .utf8)!
-            var appendStr: String = ""
-
-//            print("***** JSONデータ確認 *****")
-//            print(String(bytes: contentData, encoding: .utf8)!)
 
             let decoder = JSONDecoder()
             guard let jsonData: QuestionAnswerData = try? decoder.decode(QuestionAnswerData.self, from: contentData) else {
@@ -106,29 +121,14 @@ class SearchModel: ObservableObject, Identifiable {
             
             JsonList.append(jsonData)
         }
-//    print("***** 最終データ確認 *****")
-//    print(dateList)
-//    print(hashList)
-//    print(idList)
-//    print(imgNumList)
-//    print(sideList)
+        
+        JsonList.sort(by: {a, b -> Bool in return a.pq3 < b.pq3}) //日付を昇順に並べ替え
+        JsonList.sort(by: {a, b -> Bool in return a.pq1 < b.pq1}) //日付を昇順に並べ替え
+
     return (JsonList)
     }
+    
+    
 }
-
-
-//struct JsonData:Codable {  // - Codable に conform
-//    var pq1: String //date
-//    var pq2: String //hash
-//    var pq3: String //id
-//    var pq4: String //imgNum
-//    var pq5: String //side
-//    var pq6: String //hospital
-//    var pq7: String //disease
-//    var pq8: String //free
-//    var pq9: String //sex
-//    var pq10: String //birthdate
-//}
-
 
 

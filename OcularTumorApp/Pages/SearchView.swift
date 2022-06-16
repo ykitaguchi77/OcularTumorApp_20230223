@@ -18,6 +18,7 @@ struct Search: View {
     @State private var showingAlert = false
     @State private var orderOfDate = true //trueなら日付順、falseならID順
     @State private var items =  SearchModel.GetInstance().getJson()
+    @State private var tapidx: Int = 0
 
     
     var body: some View {
@@ -70,6 +71,7 @@ struct Search: View {
                             Text("Load")  //Loadボタン
                                 .onTapGesture {
                                     self.showingAlert.toggle()
+                                    tapidx = idx //タップした番号を記録
                                 }
                                 .frame(minWidth:0, maxWidth:bodyView.size.width/4, minHeight: 40)
                                 .foregroundColor(Color.white)
@@ -81,17 +83,17 @@ struct Search: View {
                                         dateFormatter.dateFormat = "yyyyMMdd"
                                         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                                         dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-                                        let date = dateFormatter.date(from: items[idx].pq1)
+                                        let date = dateFormatter.date(from: items[tapidx].pq1)
                                         user.date = date!
-                                        user.hashid = items[idx].pq2
-                                        user.id = items[idx].pq3
-                                        user.imageNum = Int(items[idx].pq4)!
-                                        user.selected_side = user.side.firstIndex(where: { $0 == items[idx].pq5})!
-                                        user.selected_hospital = user.hospitals.firstIndex(where: { $0 == items[idx].pq6})!
-                                        user.selected_disease = user.disease.firstIndex(where: { $0 == items[idx].pq7})!
-                                        user.free_disease = items[idx].pq8
-                                        user.selected_gender = user.gender.firstIndex(where: { $0 == items[idx].pq9})!
-                                        user.birthdate = items[idx].pq10
+                                        user.hashid = items[tapidx].pq2
+                                        user.id = items[tapidx].pq3
+                                        user.imageNum = Int(items[tapidx].pq4)!
+                                        user.selected_side = user.side.firstIndex(where: { $0 == items[tapidx].pq5})!
+                                        user.selected_hospital = user.hospitals.firstIndex(where: { $0 == items[tapidx].pq6})!
+                                        user.selected_disease = user.disease.firstIndex(where: { $0 == items[tapidx].pq7})!
+                                        user.free_disease = items[tapidx].pq8
+                                        user.selected_gender = user.gender.firstIndex(where: { $0 == items[tapidx].pq9})!
+                                        user.birthdate = items[tapidx].pq10
                                         LoadImages(name: imageName()) //imageNameはJOIR準拠の命名。画像をresultHolderに格納。
                                         self.user.isSendData = false //撮影済みを解除
                                         self.presentationMode.wrappedValue.dismiss()

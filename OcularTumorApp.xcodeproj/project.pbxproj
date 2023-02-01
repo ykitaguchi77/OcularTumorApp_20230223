@@ -20,6 +20,7 @@
 		BF60F2712766EA3000DD6253 /* ConstHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2702766EA3000DD6253 /* ConstHolder.swift */; };
 		BF60F2732766EA4000DD6253 /* ResultHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2722766EA4000DD6253 /* ResultHolder.swift */; };
 		BF60F2752766EA5700DD6253 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF60F2742766EA5700DD6253 /* UIImageExtension.swift */; };
+		BF677A72298AB9BF00FEC522 /* QRscanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF677A71298AB9BF00FEC522 /* QRscanner.swift */; };
 		BFC4E7C128131F8900149DDE /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC4E7C028131F8900149DDE /* SearchView.swift */; };
 		BFE83E3F27738A58001FEBDE /* MovieCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE83E3E27738A58001FEBDE /* MovieCropper.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +40,7 @@
 		BF60F2722766EA4000DD6253 /* ResultHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultHolder.swift; sourceTree = "<group>"; };
 		BF60F2742766EA5700DD6253 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		BF60F2762766F2CE00DD6253 /* OcularTumorApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OcularTumorApp-Info.plist"; sourceTree = SOURCE_ROOT; };
+		BF677A71298AB9BF00FEC522 /* QRscanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRscanner.swift; sourceTree = "<group>"; };
 		BFC4E7C028131F8900149DDE /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		BFE83E3E27738A58001FEBDE /* MovieCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCropper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,10 +97,11 @@
 			isa = PBXGroup;
 			children = (
 				BF60F2702766EA3000DD6253 /* ConstHolder.swift */,
-				BF5356AD2794F06D004C4BF5 /* ScanButton.swift */,
 				BF60F2722766EA4000DD6253 /* ResultHolder.swift */,
 				BF60F2742766EA5700DD6253 /* UIImageExtension.swift */,
 				BFE83E3E27738A58001FEBDE /* MovieCropper.swift */,
+				BF5356AD2794F06D004C4BF5 /* ScanButton.swift */,
+				BF677A71298AB9BF00FEC522 /* QRscanner.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				BF60F2512766E66000DD6253 /* ContentView.swift in Sources */,
 				BFE83E3F27738A58001FEBDE /* MovieCropper.swift in Sources */,
 				BF60F2672766E74A00DD6253 /* InformationView.swift in Sources */,
+				BF677A72298AB9BF00FEC522 /* QRscanner.swift in Sources */,
 				BFC4E7C128131F8900149DDE /* SearchView.swift in Sources */,
 				BF60F2732766EA4000DD6253 /* ResultHolder.swift in Sources */,
 				BF60F2652766E72A00DD6253 /* CameraPage.swift in Sources */,
@@ -355,11 +359,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yk-gankeisei.OcularTumorApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -396,11 +401,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yk-gankeisei.OcularTumorApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

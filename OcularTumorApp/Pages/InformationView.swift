@@ -14,6 +14,7 @@ struct Informations: View {
     @State var isSaved = false
     @State private var goTakePhoto: Bool = false  //撮影ボタン
     @State private var temp = "" //スキャン結果格納用の変数
+    @State private var isScanning = false
 
     
     var body: some View {
@@ -47,6 +48,23 @@ struct Informations: View {
                             }
                         ScanButton(text: $user.id)
                         .frame(width: 100, height: 30, alignment: .leading)
+                        
+
+                        Button(action: {
+                            self.isScanning = true
+                        }) {
+                            HStack
+                            {
+                                Image(systemName: "qrcode.viewfinder")
+                                Text("QRcode").font(.callout)
+                            }
+                        }
+                        .sheet(isPresented: self.$isScanning) {
+                            QRReader(text: $user.id, isScanning: $isScanning)
+                        }
+                        
+                        
+
                     }
                         
                     

@@ -33,7 +33,6 @@ struct ScanButton: UIViewRepresentable {
       func insertText(_ text: String) { parent.text = text}
       func deleteBackward() { }
     }
-    
 
 }
 

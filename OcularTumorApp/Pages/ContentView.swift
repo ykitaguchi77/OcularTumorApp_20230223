@@ -37,8 +37,6 @@ class User : ObservableObject {
     }
 
 
-
-
 struct ContentView: View {
     @ObservedObject var user = User()
     @State private var goTakePhoto: Bool = false  //撮影ボタン
@@ -60,6 +58,8 @@ struct ContentView: View {
                 .scaledToFit()
                 .frame(width: 200)
         }
+        
+        
         
         VStack(alignment:.leading, spacing:-10){
             

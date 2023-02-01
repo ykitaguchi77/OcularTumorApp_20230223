@@ -37,6 +37,8 @@ class User : ObservableObject {
     }
 
 
+
+
 struct ContentView: View {
     @ObservedObject var user = User()
     @State private var goTakePhoto: Bool = false  //撮影ボタン
